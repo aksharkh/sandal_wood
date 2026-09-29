@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────
+   Santalum Maison — "Gallery light"
+   Warm paper surfaces, near-black type, one sandalwood-red accent.
+   Every text/background pair below is ≥ 4.5:1 unless marked decorative.
+   ────────────────────────────────────────────────────────────── */
+@theme inline {
+  --color-page: #f4efe7;      /* ivory — default surface */
+  --color-paper: #fbf8f3;     /* cards, drawers */
+  --color-stone: #e8e0d4;     /* alternate section */
+  --color-sand: #d9cdbb;      /* image placeholders, subtle fills */
+  --color-line: #d6cbbb;      /* hairlines */
+  --color-ink: #1c1a17;       /* primary text */
+  --color-graphite: #4a4540;  /* secondary text */
+  --color-muted: #7a7169;     /* tertiary text / captions */
+  --color-clay: #6e2a1f;      /* sandalwood red — accent & the one dark chapter */
+  --color-clay-deep: #4f1d15;
+  --color-rose: #e9d6cc;      /* light accent tint */
+  --color-moss: #3f5a45;      /* success */
+  --color-danger: #a3362a;
+
+  /* Legacy names kept for the admin console (light) */
+  --color-bone: #1c1a17;
+  --color-gold: #6e2a1f;
+  --color-ember: #6e2a1f;
+  --color-blush: #6e2a1f;
+  --color-jade: #3f5a45;
+
+  --font-display: var(--font-instrument), var(--font-noto-serif-sc), "Songti SC", serif;
+  --font-sans: var(--font-inter), var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --background: #f4efe7;
+  --foreground: #1c1a17;
+  color-scheme: light;
+}
+
+html {
+  background: var(--background);
+  -webkit-tap-highlight-color: transparent;
+}
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: #6e2a1f; color: #fbf8f3; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+.thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: rgba(28,26,23,.15); border-radius: 99px; }
+
+/* Quiet, underlined form fields */
+.field {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #d6cbbb;
+  padding: .85rem 0 .65rem;
+  color: #1c1a17;
+  font-size: .95rem;
+  outline: none;
+  transition: border-color .3s;
+  border-radius: 0;
+}
+.field::placeholder { color: #9a9087; }
+.field:focus { border-bottom-color: #1c1a17; }
+
+.admin-input {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ddd3c5;
+  border-radius: .5rem;
+  padding: .55rem .75rem;
+  color: #1c1a17;
+  font-size: .85rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.admin-input:focus { border-color: #1c1a17; box-shadow: 0 0 0 3px rgba(28,26,23,.06); }
+
+/* Editorial body copy */
+.prose-lux p + p { margin-top: 1.1em; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

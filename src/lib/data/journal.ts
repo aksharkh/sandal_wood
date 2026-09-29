@@ -1,0 +1,95 @@
+import type { JournalPost } from "../types";
+
+export const JOURNAL: JournalPost[] = [
+  {
+    slug: "what-is-red-sandalwood",
+    title: { en: "What Is Red Sandalwood? A Guide to Pterocarpus santalinus", zh: "什么是小叶紫檀？Pterocarpus santalinus 指南" },
+    excerpt: {
+      en: "A slow-growing tree endemic to a small range of hills in southern India — and one of the most sought-after woods in the world.",
+      zh: "一种只生长于印度南部一小片山地的慢生树种——也是世界上最受追捧的木材之一。",
+    },
+    category: "Material",
+    readMins: 8,
+    date: "2026-09-12",
+    visual: "powder",
+    image: "/images/p-grain-red.jpg",
+    body: [
+      { en: "Pterocarpus santalinus grows almost nowhere but the dry deciduous forests of the Seshachalam, Palakonda and Veligonda hills of Andhra Pradesh, with small pockets extending into Tamil Nadu and Karnataka. It is slow — a tree may take several decades to lay down a heartwood worth working.", zh: "小叶紫檀几乎只生长于安得拉邦塞沙查拉姆、帕拉孔达与韦利贡达山区的干燥落叶林中，少量分布延伸至泰米尔纳德邦与卡纳塔克邦。它生长极慢——一棵树需数十年才能形成值得加工的心材。" },
+      { en: "The sapwood is pale; the heartwood is where the colour lives — a red that ranges from ember to near-black violet, darkening with light and handling. Freshly cut, it is almost orange. With years, it becomes the colour of old wine.", zh: "边材颜色浅淡，色彩尽在心材——从余烬红到近乎黑紫，随光照与盘玩逐渐加深。新切面近乎橙色，经年累月，化为陈酒之色。" },
+      { en: "It is also dense. Good heartwood sinks in water, and the finest material shows tiny golden flecks — crystallised deposits that Chinese collectors call jinxing, ‘gold stars’ — and a fine, wavy grain known as niumao wen, ‘cow-hair grain’.", zh: "它还极为致密。优质心材可沉水，上品可见细小的金色闪点——藏家称之为“金星”——以及细密波状的“牛毛纹”。" },
+      { en: "Because it is so prized, it is also protected. Red sandalwood is listed under CITES Appendix II, and legal trade depends on documented, government-auctioned stock. That documentation is why every Santalum Maison object carries a batch number.", zh: "正因珍贵，它也受到保护。小叶紫檀列入CITES附录II，合法贸易依赖于有记录的政府拍卖存料。这正是每件Santalum Maison器物都带有批次编号的原因。" },
+    ],
+  },
+  {
+    slug: "red-sandalwood-vs-sandalwood",
+    title: { en: "Red Sandalwood vs Sandalwood: What Is the Difference?", zh: "小叶紫檀与檀香：有何不同？" },
+    excerpt: {
+      en: "They share a name and a homeland, but almost nothing else. A short guide to two very different woods.",
+      zh: "二者同名同乡，却几乎毫无共同之处。一篇关于两种截然不同木材的小指南。",
+    },
+    category: "Material",
+    readMins: 6,
+    date: "2026-08-28",
+    visual: "incense",
+    image: "/images/e-smoke.jpg",
+    body: [
+      { en: "Sandalwood — Santalum album — is a fragrant, pale-gold wood distilled for its oil. Red sandalwood — Pterocarpus santalinus — is a legume tree, prized not for scent but for colour, density and grain.", zh: "檀香（Santalum album）是一种芳香的浅金色木材，主要用于蒸馏精油。小叶紫檀（Pterocarpus santalinus）属豆科，珍贵之处不在香气，而在色泽、密度与纹理。" },
+      { en: "In Sanskrit, the first is chandana; the second, rakta chandana — ‘red’ chandana. Both appear in Ayurvedic texts, both in temple ritual. But they are worked, valued and used entirely differently.", zh: "梵文中，前者称 chandana，后者称 rakta chandana——“红色的檀”。二者皆见于阿育吠陀典籍与寺庙仪式，但加工、估值与用途完全不同。" },
+      { en: "The simplest test: sandalwood smells unmistakably sweet; red sandalwood smells faintly of earth and leaves a red trace when rubbed on a wet stone.", zh: "最简单的辨别：檀香有明显的甜香；小叶紫檀气味淡而带泥土气息，在湿石上摩擦会留下红色痕迹。" },
+    ],
+  },
+  {
+    slug: "the-turners-of-tirupati",
+    title: { en: "The Turners of Tirupati", zh: "蒂鲁帕蒂的车木匠人" },
+    excerpt: { en: "Three generations at one lathe, and the patience it takes to turn a bead that sinks.", zh: "三代人守着同一台车床，以及车出一颗沉水珠所需的耐心。" },
+    category: "People",
+    readMins: 7,
+    date: "2026-08-02",
+    visual: "mala",
+    image: "/images/e-chisel.jpg",
+    body: [
+      { en: "Ramanaiah learned from his father, who learned from his. The lathe is foot-driven; the tools are forged from old files. A bead is turned in under a minute, but it is chosen, cut, seasoned and inspected over months.", zh: "拉马纳亚师从父亲，父亲师从祖父。车床以脚踏驱动，刀具由旧锉刀锻成。车一颗珠子不到一分钟，但选料、切割、风干与检验需要数月。" },
+      { en: "‘The wood tells you when to stop,’ he says. Push the tool too hard and the heartwood tears; too gently and the surface stays dull. The shine should come from the wood, not from lacquer.", zh: "“木头会告诉你何时停手。”他说。刀用力过猛，心材会撕裂；过轻则表面暗淡。光泽应来自木头本身，而非漆面。" },
+    ],
+  },
+  {
+    slug: "the-mala-and-the-shouchuan",
+    title: { en: "The Mala and the Shouchuan", zh: "念珠与手串" },
+    excerpt: { en: "How a string of 108 beads travelled from Indian monasteries to the wrists of Beijing collectors.", zh: "一串一百零八颗的念珠，如何从印度寺院走上北京藏家的手腕。" },
+    category: "Indian Context",
+    readMins: 9,
+    date: "2026-07-18",
+    visual: "bracelet",
+    image: "/images/p-mala-hand.jpg",
+    body: [
+      { en: "The mala crossed the Himalaya with Buddhism. In China it became the shuzhu — and, shortened for the wrist, the shouchuan. Red sandalwood, zitan, followed: by the Ming dynasty it was the most valued wood at court.", zh: "念珠随佛教翻越喜马拉雅山。在中国，它成为“数珠”，缩短后戴在腕上，便成了“手串”。小叶紫檀亦随之而来——至明代，已成宫廷最珍视的木材。" },
+      { en: "The two traditions still speak to each other. The Indian mala is counted; the Chinese shouchuan is handled, polished by the palm until it takes on a patina — baojiang. Our beads are made for both.", zh: "两种传统至今依然彼此对话。印度念珠用于计数；中国手串则被把玩，经手掌摩挲形成包浆。我们的珠子，为两者而作。" },
+    ],
+  },
+  {
+    slug: "five-steps-select-to-present",
+    title: { en: "Select, Shape, Finish, Inspect, Present", zh: "选料、成形、打磨、检验、呈献" },
+    excerpt: { en: "The five stages every object passes through before it reaches you — and the ones we reject.", zh: "每件器物抵达你手中之前经历的五个阶段——以及被我们淘汰的那些。" },
+    category: "Making",
+    readMins: 5,
+    date: "2026-06-30",
+    visual: "comb",
+    image: "/images/e-workshop.jpg",
+    body: [
+      { en: "Roughly four in ten billets that reach the atelier are rejected at selection: too much sapwood, hidden cracks, or a density below 1.05. Of what remains, the offcuts become powder. Nothing is wasted; much is refused.", zh: "进入工坊的木料中，约四成在选料阶段被淘汰：边材过多、暗裂，或密度低于1.05。余下的边角料研为檀粉。无一浪费，但多有舍弃。" },
+    ],
+  },
+  {
+    slug: "an-object-the-keepsake-box",
+    title: { en: "An Object: The Keepsake Box", zh: "一件器物：珍藏盒" },
+    excerpt: { en: "Why a box made to hold small things takes nine days to make.", zh: "为何一只收纳小物的盒子需要九天才能完成。" },
+    category: "Object",
+    readMins: 4,
+    date: "2026-06-11",
+    visual: "box",
+    image: "/images/p-box.jpg",
+    body: [
+      { en: "Eighteen hand-cut dovetails. A hinge filed from solid brass. A lid fitted so closely that it settles on a cushion of air. Nine days, most of them spent waiting for glue, oil and wood to agree.", zh: "十八个手工燕尾榫，一副实心黄铜锉制的合页，盒盖严丝合缝，落下时如同垫着一层空气。九天工期，大多在等待胶、油与木彼此契合。" },
+    ],
+  },
+];

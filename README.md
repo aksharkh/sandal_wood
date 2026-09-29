@@ -1,6 +1,6 @@
 # Santalum Maison — web front-end
 
-Premium red-sandalwood storefront + atelier admin console. Design direction: "Gallery light" (ivory/stone surfaces, near-black type, one sandalwood-red accent; Instrument Serif + Inter Tight). Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, Motion, Zustand.
+Premium red-sandalwood storefront + atelier admin console. Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, Motion, Zustand.
 
 ```bash
 npm install
@@ -31,7 +31,7 @@ Seed data: `src/lib/data/*`. Admin → Settings → *Reset demo data* restores i
 
 ## Placeholders to replace
 
-- **Photography:** 35 interim photos in `public/images/` from Unsplash (free commercial use under the Unsplash licence, no attribution required). They are stand-ins, not the client's products. Replace them with the client's shoot, either by swapping the files (same names) or per product in Admin → Catalogue → Media. Images are served from our own domain, so they load in mainland China.
+- **Product imagery:** procedural SVG renders (`src/components/visual/ProductVisual.tsx`). Upload real photos per product in Admin → Catalogue → Media.
 - **Provenance records, legal copy, founder portrait, contact numbers, WeChat QR:** sample content, to be supplied by the client.
 - **Payments, shipping and OTP sign-in:** the UI is complete but simulated. Wire them in during the integrations phase.
 - **Tax rates** (India GST 3% inclusive, China CBEC 9.1%): indicative only. Confirm with the client's CA.

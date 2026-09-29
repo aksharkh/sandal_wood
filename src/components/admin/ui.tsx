@@ -7,27 +7,15 @@ import { EASE } from "../motion/primitives";
 import { cn } from "@/lib/utils";
 import type { EnquiryStatus, OrderStatus, PaymentStatus } from "@/lib/types";
 
-/** Validated categorical order (light surface): India, China, International. */
-export const REGION_COLORS = { India: "#9e3a26", China: "#1f72a8", International: "#b8860b" } as const;
+/** Validated categorical order (dark surface): India, China, International. */
+export const REGION_COLORS = { India: "#d9573a", China: "#1f9fc6", International: "#b88a14" } as const;
 
-export function Panel({
-  title,
-  action,
-  children,
-  className,
-  pad = true,
-}: {
-  title?: ReactNode;
-  action?: ReactNode;
-  children: ReactNode;
-  className?: string;
-  pad?: boolean;
-}) {
+export function Panel({ title, action, children, className, pad = true }: { title?: ReactNode; action?: ReactNode; children: ReactNode; className?: string; pad?: boolean }) {
   return (
-    <section className={cn("border border-line bg-white", className)}>
+    <section className={cn("rounded-3xl border border-bone/[0.07] bg-gradient-to-b from-bone/[0.035] to-bone/[0.01]", className)}>
       {(title || action) && (
         <header className="flex items-center justify-between gap-4 px-6 pt-5">
-          <h3 className="text-[12px] font-medium text-graphite">{title}</h3>
+          <h3 className="text-[11px] font-medium uppercase tracking-[0.22em] text-bone/55">{title}</h3>
           {action}
         </header>
       )}
@@ -47,19 +35,18 @@ export function Btn({
 }: {
   children: ReactNode;
   onClick?: () => void;
-  variant?: "primary" | "solid" | "ghost" | "gold" | "danger" | "subtle";
+  variant?: "primary" | "ghost" | "gold" | "danger" | "subtle";
   className?: string;
   type?: "button" | "submit";
   disabled?: boolean;
   size?: "sm" | "md";
 }) {
   const v = {
-    primary: "bg-ink text-page hover:bg-graphite",
-    solid: "bg-ink text-page hover:bg-graphite",
-    gold: "bg-ink text-page hover:bg-graphite",
-    ghost: "border border-line bg-white text-ink hover:border-ink",
+    primary: "bg-bone text-ink hover:bg-white",
+    gold: "bg-gold text-ink hover:bg-[#d8b57c]",
+    ghost: "border border-bone/12 text-bone/85 hover:border-bone/30 hover:bg-bone/[0.04]",
     danger: "border border-danger/40 text-danger hover:bg-danger/10",
-    subtle: "text-graphite hover:bg-stone hover:text-ink",
+    subtle: "text-bone/60 hover:bg-bone/[0.05] hover:text-bone",
   }[variant];
   return (
     <button
@@ -67,7 +54,7 @@ export function Btn({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "inline-flex items-center justify-center gap-2 font-medium rounded-md transition-colors duration-200 disabled:pointer-events-none disabled:opacity-40",
+        "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-300 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40",
         size === "sm" ? "h-8 px-3 text-xs" : "h-10 px-4 text-[13px]",
         v,
         className,
@@ -79,29 +66,29 @@ export function Btn({
 }
 
 const ORDER_STATUS: Record<OrderStatus, { label: string; cls: string; icon: typeof Clock }> = {
-  pending: { label: "Pending", cls: "bg-[#e2b340]/12 text-[#7d5a0e]", icon: Clock },
-  confirmed: { label: "Confirmed", cls: "bg-[#6aa5ff]/12 text-[#2f5fae]", icon: CheckCircle2 },
-  packed: { label: "Packed", cls: "bg-[#a78bfa]/12 text-[#5b3fa0]", icon: PackageCheck },
-  shipped: { label: "Shipped", cls: "bg-[#38bdf8]/12 text-[#1f6a8e]", icon: Truck },
-  delivered: { label: "Delivered", cls: "bg-[#4ade80]/12 text-[#2f6b45]", icon: CheckCircle2 },
-  cancelled: { label: "Cancelled", cls: "bg-stone text-graphite", icon: XCircle },
-  returned: { label: "Returned", cls: "bg-[#f87171]/12 text-[#a3362a]", icon: RotateCcw },
+  pending: { label: "Pending", cls: "bg-[#e2b340]/12 text-[#e8c264]", icon: Clock },
+  confirmed: { label: "Confirmed", cls: "bg-[#6aa5ff]/12 text-[#8ab8ff]", icon: CheckCircle2 },
+  packed: { label: "Packed", cls: "bg-[#a78bfa]/12 text-[#c0adfb]", icon: PackageCheck },
+  shipped: { label: "Shipped", cls: "bg-[#38bdf8]/12 text-[#6fd0fa]", icon: Truck },
+  delivered: { label: "Delivered", cls: "bg-[#4ade80]/12 text-[#7ee8a3]", icon: CheckCircle2 },
+  cancelled: { label: "Cancelled", cls: "bg-bone/[0.06] text-bone/50", icon: XCircle },
+  returned: { label: "Returned", cls: "bg-[#f87171]/12 text-[#fa9a9a]", icon: RotateCcw },
 };
 
 export function StatusBadge({ status }: { status: OrderStatus }) {
   const s = ORDER_STATUS[status];
   return (
-    <span className={cn("inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-medium", s.cls)}>
+    <span className={cn("inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium", s.cls)}>
       <s.icon className="h-3 w-3" /> {s.label}
     </span>
   );
 }
 
 const PAY: Record<PaymentStatus, { cls: string; icon: typeof Clock }> = {
-  paid: { cls: "text-[#2f6b45]", icon: CheckCircle2 },
-  pending: { cls: "text-[#7d5a0e]", icon: CircleDashed },
-  failed: { cls: "text-[#a3362a]", icon: AlertTriangle },
-  refunded: { cls: "text-graphite", icon: RotateCcw },
+  paid: { cls: "text-[#7ee8a3]", icon: CheckCircle2 },
+  pending: { cls: "text-[#e8c264]", icon: CircleDashed },
+  failed: { cls: "text-[#fa9a9a]", icon: AlertTriangle },
+  refunded: { cls: "text-bone/50", icon: RotateCcw },
 };
 
 export function PayBadge({ status }: { status: PaymentStatus }) {
@@ -114,40 +101,26 @@ export function PayBadge({ status }: { status: PaymentStatus }) {
 }
 
 const ENQ: Record<EnquiryStatus, string> = {
-  new: "bg-clay/15 text-clay",
-  "in-progress": "bg-[#6aa5ff]/12 text-[#2f5fae]",
-  quoted: "bg-[#a78bfa]/12 text-[#5b3fa0]",
-  won: "bg-[#4ade80]/12 text-[#2f6b45]",
-  closed: "bg-stone text-graphite",
+  new: "bg-ember/15 text-blush",
+  "in-progress": "bg-[#6aa5ff]/12 text-[#8ab8ff]",
+  quoted: "bg-[#a78bfa]/12 text-[#c0adfb]",
+  won: "bg-[#4ade80]/12 text-[#7ee8a3]",
+  closed: "bg-bone/[0.06] text-bone/50",
 };
 export function EnquiryBadge({ status }: { status: EnquiryStatus }) {
-  return <span className={cn("inline-flex rounded-full px-2.5 py-1 text-[12px] font-medium capitalize", ENQ[status])}>{status.replace("-", " ")}</span>;
+  return <span className={cn("inline-flex rounded-full px-2.5 py-1 text-[11px] font-medium capitalize", ENQ[status])}>{status.replace("-", " ")}</span>;
 }
 
 export function RegionTag({ region }: { region: keyof typeof REGION_COLORS }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs text-ink">
+    <span className="inline-flex items-center gap-1.5 text-xs text-bone/70">
       <span className="h-2 w-2 rounded-full" style={{ background: REGION_COLORS[region] }} />
       {region}
     </span>
   );
 }
 
-export function Drawer({
-  open,
-  onClose,
-  title,
-  children,
-  width = 560,
-  footer,
-}: {
-  open: boolean;
-  onClose: () => void;
-  title: ReactNode;
-  children: ReactNode;
-  width?: number;
-  footer?: ReactNode;
-}) {
+export function Drawer({ open, onClose, title, children, width = 560, footer }: { open: boolean; onClose: () => void; title: ReactNode; children: ReactNode; width?: number; footer?: ReactNode }) {
   useEffect(() => {
     const k = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", k);
@@ -157,23 +130,23 @@ export function Drawer({
     <AnimatePresence>
       {open && (
         <>
-          <motion.div className="fixed inset-0 z-[80] bg-black/60" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
+          <motion.div className="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
           <motion.aside
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.55, ease: EASE }}
             style={{ maxWidth: width }}
-            className="fixed right-0 top-0 z-[81] flex h-dvh w-full flex-col border-l border-line bg-paper"
+            className="fixed right-0 top-0 z-[81] flex h-dvh w-full flex-col border-l border-bone/10 bg-[#120b09]"
           >
-            <header className="flex items-center justify-between border-b border-line px-6 py-5">
+            <header className="flex items-center justify-between border-b border-bone/[0.07] px-6 py-5">
               <div className="min-w-0 flex-1">{title}</div>
-              <button onClick={onClose} className="grid h-9 w-9 place-items-center text-graphite hover:bg-stone hover:text-ink" aria-label="Close">
+              <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-xl text-bone/60 hover:bg-bone/5 hover:text-bone" aria-label="Close">
                 <X className="h-4 w-4" />
               </button>
             </header>
             <div className="thin-scroll flex-1 overflow-y-auto px-6 py-6">{children}</div>
-            {footer && <footer className="border-t border-line px-6 py-4">{footer}</footer>}
+            {footer && <footer className="border-t border-bone/[0.07] px-6 py-4">{footer}</footer>}
           </motion.aside>
         </>
       )}
@@ -184,9 +157,9 @@ export function Drawer({
 export function Field({ label, children, hint, className }: { label: string; children: ReactNode; hint?: string; className?: string }) {
   return (
     <label className={cn("block", className)}>
-      <span className="mb-1.5 block text-[12px] font-medium uppercase tracking-[0.14em] text-muted">{label}</span>
+      <span className="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.14em] text-bone/45">{label}</span>
       {children}
-      {hint && <span className="mt-1 block text-[12px] text-muted">{hint}</span>}
+      {hint && <span className="mt-1 block text-[11px] text-bone/35">{hint}</span>}
     </label>
   );
 }
@@ -194,10 +167,10 @@ export function Field({ label, children, hint, className }: { label: string; chi
 export function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label?: string }) {
   return (
     <button type="button" onClick={() => onChange(!on)} className="inline-flex items-center gap-2" role="switch" aria-checked={on}>
-      <span className={cn("relative h-5 w-9 rounded-full transition-colors", on ? "bg-clay" : "bg-ink/15")}>
-        <motion.span layout transition={{ duration: 0.25 }} className={cn("absolute top-0.5 h-4 w-4 rounded-full bg-page", on ? "right-0.5" : "left-0.5")} />
+      <span className={cn("relative h-5 w-9 rounded-full transition-colors", on ? "bg-gold" : "bg-bone/15")}>
+        <motion.span layout transition={{ duration: 0.25 }} className={cn("absolute top-0.5 h-4 w-4 rounded-full bg-ink", on ? "right-0.5" : "left-0.5")} />
       </span>
-      {label && <span className="text-sm text-ink">{label}</span>}
+      {label && <span className="text-sm text-bone/75">{label}</span>}
     </button>
   );
 }
@@ -219,14 +192,8 @@ export function Toaster() {
     <div className="fixed bottom-6 left-1/2 z-[120] flex -translate-x-1/2 flex-col items-center gap-2">
       <AnimatePresence>
         {items.map((t) => (
-          <motion.div
-            key={t.id}
-            initial={{ opacity: 0, y: 16, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8 }}
-            className="flex items-center gap-2 border border-line bg-paper px-4 py-3 text-sm"
-          >
-            <CheckCircle2 className="h-4 w-4 text-[#2f6b45]" /> {t.text}
+          <motion.div key={t.id} initial={{ opacity: 0, y: 16, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8 }} className="flex items-center gap-2 rounded-2xl border border-bone/10 bg-[#1b1210]/95 px-4 py-3 text-sm shadow-2xl backdrop-blur">
+            <CheckCircle2 className="h-4 w-4 text-[#7ee8a3]" /> {t.text}
           </motion.div>
         ))}
       </AnimatePresence>
@@ -238,8 +205,8 @@ export function PageHead({ title, sub, actions }: { title: string; sub?: string;
   return (
     <div className="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h1 className="font-display text-4xl tracking-tight md:text-5xl">{title}</h1>
-        {sub && <p className="mt-1.5 text-sm text-muted">{sub}</p>}
+        <h1 className="font-display text-4xl font-light tracking-tight md:text-5xl">{title}</h1>
+        {sub && <p className="mt-1.5 text-sm text-bone/45">{sub}</p>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </div>
@@ -248,15 +215,7 @@ export function PageHead({ title, sub, actions }: { title: string; sub?: string;
 
 export function Th({ children, className, onClick, active }: { children?: ReactNode; className?: string; onClick?: () => void; active?: boolean }) {
   return (
-    <th
-      onClick={onClick}
-      className={cn(
-        "whitespace-nowrap px-4 py-3 text-left text-[12px] font-medium uppercase tracking-[0.16em] text-muted",
-        onClick && "cursor-pointer select-none hover:text-ink",
-        active && "text-clay",
-        className,
-      )}
-    >
+    <th onClick={onClick} className={cn("whitespace-nowrap px-4 py-3 text-left text-[10px] font-medium uppercase tracking-[0.16em] text-bone/40", onClick && "cursor-pointer select-none hover:text-bone/70", active && "text-gold", className)}>
       {children}
     </th>
   );

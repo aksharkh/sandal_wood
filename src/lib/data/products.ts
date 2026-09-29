@@ -6,7 +6,6 @@ export type CollectionInfo = {
   kicker: L;
   blurb: L;
   visual: Product["visual"];
-  image: string;
 };
 
 export const COLLECTIONS: CollectionInfo[] = [
@@ -19,7 +18,6 @@ export const COLLECTIONS: CollectionInfo[] = [
       zh: "心材与金银相映——手镯、吊坠与耳坠，随肌肤温度而生暖意。",
     },
     visual: "bangle",
-    image: "/images/p-bangle.jpg",
   },
   {
     slug: "beads-malas",
@@ -30,7 +28,6 @@ export const COLLECTIONS: CollectionInfo[] = [
       zh: "手工车制，一百零八与二十七颗，丝线手结。油性足、密度高、金星闪烁。",
     },
     visual: "mala",
-    image: "/images/p-mala-red.jpg",
   },
   {
     slug: "everyday-objects",
@@ -41,7 +38,6 @@ export const COLLECTIONS: CollectionInfo[] = [
       zh: "梳、盒与香座——为日常的小仪式，赋予值得回味的材质。",
     },
     visual: "comb",
-    image: "/images/p-comb.jpg",
   },
   {
     slug: "powder-material",
@@ -52,7 +48,6 @@ export const COLLECTIONS: CollectionInfo[] = [
       zh: "用于礼仪与护理的红檀粉，以及附密度证明的心材标本。",
     },
     visual: "powder",
-    image: "/images/p-powder.jpg",
   },
   {
     slug: "gifting",
@@ -63,7 +58,6 @@ export const COLLECTIONS: CollectionInfo[] = [
       zh: "以漆盒呈献——婚礼、排灯节、新春，以及人生每一个重要时刻。",
     },
     visual: "box",
-    image: "/images/p-box-carved.jpg",
   },
 ];
 
@@ -623,27 +617,3 @@ export const SEED_PRODUCTS: Product[] = [
     occasion: ["spring-festival", "gift"],
   },
 ];
-
-// Interim licensed photography (Unsplash licence) until the client's own shoot.
-// Admin uploads replace these per product.
-const PHOTOS: Record<string, string[]> = {
-  p01: ["p-bracelet", "p-bracelet-wood"],
-  p02: ["p-bangle", "e-grain-rich"],
-  p03: ["p-pendant", "p-grain-red"],
-  p04: ["p-earrings", "p-ring"],
-  p05: ["p-ring", "p-rings-box"],
-  p06: ["p-carving", "e-temple-pillars"],
-  p07: ["p-rings-box", "p-box"],
-  p08: ["p-mala-red", "e-elder-mala"],
-  p09: ["p-mala-hand", "p-beads-dark"],
-  p10: ["p-beads-dark", "p-mala-red"],
-  p11: ["p-comb", "e-grain-light"],
-  p12: ["p-box", "p-box-carved"],
-  p13: ["p-incense", "e-smoke"],
-  p14: ["p-powder", "e-kumkum"],
-  p15: ["p-grain-red", "e-bark"],
-  p16: ["p-box-carved", "p-box"],
-  p17: ["p-wedding", "p-bride"],
-  p18: ["e-ritual-thread", "p-box-carved"],
-};
-for (const p of SEED_PRODUCTS) p.images = (PHOTOS[p.id] ?? []).map((n) => `/images/${n}.jpg`);

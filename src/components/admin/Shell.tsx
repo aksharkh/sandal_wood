@@ -76,10 +76,10 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const nav = (
     <nav className="flex h-full flex-col">
       <Link href="/admin" className="flex items-center gap-3 px-5 py-6">
-        <Monogram className="text-ink" />
+        <Monogram className="h-8 w-8 text-gold" />
         <span className="leading-none">
           <span className="block font-display text-lg tracking-[0.28em]">SANTALUM</span>
-          <span className="mt-1 block text-[12px] uppercase tracking-[0.3em] text-muted">Atelier console</span>
+          <span className="mt-1 block text-[9px] uppercase tracking-[0.4em] text-gold/70">Atelier console</span>
         </span>
       </Link>
       <ul className="thin-scroll flex-1 space-y-0.5 overflow-y-auto px-3">
@@ -88,42 +88,23 @@ export function AdminShell({ children }: { children: ReactNode }) {
           const count = n.badge ? counts[n.badge] : 0;
           return (
             <li key={n.href}>
-              <Link
-                href={n.href}
-                onClick={() => setMobile(false)}
-                className={cn(
-                  "group relative flex items-center gap-3 rounded-md px-3 py-2.5 text-[13px] transition-colors",
-                  active ? "font-medium text-ink" : "text-graphite hover:text-ink",
-                )}
-              >
-                {active && <motion.span layoutId="admin-nav" className="absolute inset-0 rounded-md bg-stone" transition={{ duration: 0.3, ease: EASE }} />}
-                <n.icon className="relative h-4 w-4" strokeWidth={1.6} />
+              <Link href={n.href} onClick={() => setMobile(false)} className={cn("group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] transition-colors", active ? "text-bone" : "text-bone/55 hover:bg-bone/[0.03] hover:text-bone")}>
+                {active && <motion.span layoutId="admin-nav" className="absolute inset-0 rounded-xl border border-bone/[0.08] bg-gradient-to-r from-santal/25 to-transparent" transition={{ duration: 0.45, ease: EASE }} />}
+                <n.icon className={cn("relative h-4 w-4", active && "text-gold")} strokeWidth={1.6} />
                 <span className="relative flex-1">{n.label}</span>
-                {count > 0 && (
-                  <span
-                    className={cn(
-                      "relative rounded-full px-1.5 py-0.5 text-[12px] tabular-nums",
-                      n.badge === "low" ? "bg-[#e2b340]/15 text-[#7d5a0e]" : "bg-clay text-paper",
-                    )}
-                  >
-                    {count}
-                  </span>
-                )}
+                {count > 0 && <span className={cn("relative rounded-full px-1.5 py-0.5 text-[10px] tabular-nums", n.badge === "low" ? "bg-[#e2b340]/15 text-[#e8c264]" : "bg-ember/20 text-blush")}>{count}</span>}
               </Link>
             </li>
           );
         })}
       </ul>
-      <div className="m-3 border border-line bg-stone p-4">
-        <p className="text-[12px] text-muted">Storefront</p>
-        <Link href="/" target="_blank" className="mt-2 flex items-center justify-between text-sm text-ink hover:underline">
+      <div className="m-3 rounded-2xl border border-bone/[0.07] bg-bone/[0.02] p-4">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-bone/40">Storefront</p>
+        <Link href="/" target="_blank" className="mt-2 flex items-center justify-between text-sm text-bone/80 hover:text-gold">
           santalummaison.com <ExternalLink className="h-3.5 w-3.5" />
         </Link>
-        <p className="mt-3 flex items-center gap-2 text-[12px] text-[#2f6b45]">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inset-0 animate-ping rounded-full bg-[#4ade80]/60" />
-            <span className="relative h-2 w-2 rounded-full bg-[#4ade80]" />
-          </span>
+        <p className="mt-3 flex items-center gap-2 text-[11px] text-[#7ee8a3]">
+          <span className="relative flex h-2 w-2"><span className="absolute inset-0 animate-ping rounded-full bg-[#4ade80]/60" /><span className="relative h-2 w-2 rounded-full bg-[#4ade80]" /></span>
           Live · IN & CN
         </p>
       </div>
@@ -131,25 +112,14 @@ export function AdminShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="min-h-screen bg-page text-ink">
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-line bg-paper lg:block">{nav}</aside>
+    <div className="min-h-screen bg-[#0d0806] text-bone">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(50%_40%_at_80%_0%,rgba(158,47,31,.12),transparent_70%)]" />
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-bone/[0.06] bg-[#0f0907]/90 backdrop-blur lg:block">{nav}</aside>
       <AnimatePresence>
         {mobile && (
           <>
-            <motion.div
-              className="fixed inset-0 z-50 bg-black/60 lg:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMobile(false)}
-            />
-            <motion.aside
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ duration: 0.45, ease: EASE }}
-              className="fixed inset-y-0 left-0 z-50 w-72 border-r border-line bg-paper lg:hidden"
-            >
+            <motion.div className="fixed inset-0 z-50 bg-black/60 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setMobile(false)} />
+            <motion.aside initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }} transition={{ duration: 0.45, ease: EASE }} className="fixed inset-y-0 left-0 z-50 w-72 border-r border-bone/10 bg-[#0f0907] lg:hidden">
               {nav}
             </motion.aside>
           </>
@@ -157,45 +127,32 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </AnimatePresence>
 
       <div className="relative lg:pl-64">
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-line bg-page/80 px-4 md:px-8">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-bone/[0.06] bg-[#0d0806]/80 px-4 backdrop-blur-xl md:px-8">
           <button className="lg:hidden" onClick={() => setMobile(true)} aria-label="Menu">
             <Menu className="h-5 w-5" />
           </button>
-          <button
-            onClick={() => setPalette(true)}
-            className="flex h-10 max-w-md flex-1 items-center gap-3 border border-line bg-stone px-3 text-sm text-muted hover:border-line"
-          >
+          <button onClick={() => setPalette(true)} className="flex h-10 max-w-md flex-1 items-center gap-3 rounded-xl border border-bone/[0.08] bg-bone/[0.02] px-3 text-sm text-bone/40 hover:border-bone/20">
             <Search className="h-4 w-4" />
             <span className="flex-1 text-left">Search orders, products, customers…</span>
-            <kbd className="hidden items-center gap-1 rounded-md border border-line px-1.5 py-0.5 font-mono text-[12px] sm:flex">
+            <kbd className="hidden items-center gap-1 rounded-md border border-bone/10 px-1.5 py-0.5 font-mono text-[10px] sm:flex">
               <Command className="h-3 w-3" />K
             </kbd>
           </button>
           <div className="ml-auto flex items-center gap-2">
-            <Link
-              href="/admin/orders?status=pending"
-              className="relative grid h-10 w-10 place-items-center text-graphite hover:bg-stone hover:text-ink"
-              aria-label="Notifications"
-            >
+            <Link href="/admin/orders?status=pending" className="relative grid h-10 w-10 place-items-center rounded-xl text-bone/60 hover:bg-bone/5 hover:text-bone" aria-label="Notifications">
               <Bell className="h-[18px] w-[18px]" strokeWidth={1.5} />
-              {counts.pending > 0 && <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-clay" />}
+              {counts.pending > 0 && <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-ember" />}
             </Link>
-            <div className="flex items-center gap-3 py-1 pl-1 pr-3 hover:bg-stone">
-              <span className="grid h-8 w-8 place-items-center bg-paper font-display">M</span>
+            <div className="flex items-center gap-3 rounded-xl py-1 pl-1 pr-3 hover:bg-bone/5">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-santal to-oxblood font-display">M</span>
               <span className="hidden text-left text-xs leading-tight sm:block">
                 Meera Iyer
-                <span className="block text-muted">Owner</span>
+                <span className="block text-bone/40">Owner</span>
               </span>
             </div>
           </div>
         </header>
-        <motion.main
-          key={pathname}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: EASE }}
-          className="px-4 py-8 md:px-8 md:py-10"
-        >
+        <motion.main key={pathname} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: EASE }} className="px-4 py-8 md:px-8 md:py-10">
           {children}
         </motion.main>
       </div>
@@ -223,40 +180,18 @@ function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void 
   const ql = q.toLowerCase();
   const results = q
     ? [
-        ...orders
-          .filter((o) => o.id.toLowerCase().includes(ql) || o.customerName.toLowerCase().includes(ql))
-          .slice(0, 5)
-          .map((o) => ({ k: o.id, label: `${o.id} · ${o.customerName}`, group: "Order", href: `/admin/orders?open=${o.id}` })),
-        ...products
-          .filter((p) => (p.name.en + (p.name.zh ?? "")).toLowerCase().includes(ql))
-          .slice(0, 5)
-          .map((p) => ({ k: p.id, label: p.name.en, group: "Product", href: `/admin/products?edit=${p.id}` })),
-        ...customers
-          .filter((c) => (c.name + c.email).toLowerCase().includes(ql))
-          .slice(0, 5)
-          .map((c) => ({ k: c.id, label: `${c.name} · ${c.email}`, group: "Customer", href: `/admin/customers?open=${c.id}` })),
+        ...orders.filter((o) => o.id.toLowerCase().includes(ql) || o.customerName.toLowerCase().includes(ql)).slice(0, 5).map((o) => ({ k: o.id, label: `${o.id} · ${o.customerName}`, group: "Order", href: `/admin/orders?open=${o.id}` })),
+        ...products.filter((p) => (p.name.en + (p.name.zh ?? "")).toLowerCase().includes(ql)).slice(0, 5).map((p) => ({ k: p.id, label: p.name.en, group: "Product", href: `/admin/products?edit=${p.id}` })),
+        ...customers.filter((c) => (c.name + c.email).toLowerCase().includes(ql)).slice(0, 5).map((c) => ({ k: c.id, label: `${c.name} · ${c.email}`, group: "Customer", href: `/admin/customers?open=${c.id}` })),
       ]
     : NAV.map((n) => ({ k: n.href, label: n.label, group: "Go to", href: n.href }));
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
-          className="fixed inset-0 z-[100] flex items-start justify-center bg-black/60 p-4 pt-[12vh]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <motion.div
-            onClick={(e) => e.stopPropagation()}
-            initial={{ y: -12, scale: 0.98 }}
-            animate={{ y: 0, scale: 1 }}
-            exit={{ y: -12, opacity: 0 }}
-            transition={{ duration: 0.3, ease: EASE }}
-            className="w-full max-w-xl overflow-hidden border border-line bg-paper"
-          >
-            <div className="flex items-center gap-3 border-b border-line px-4">
-              <Search className="h-4 w-4 text-clay" />
+        <motion.div className="fixed inset-0 z-[100] flex items-start justify-center bg-black/60 p-4 pt-[12vh] backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
+          <motion.div onClick={(e) => e.stopPropagation()} initial={{ y: -12, scale: 0.98 }} animate={{ y: 0, scale: 1 }} exit={{ y: -12, opacity: 0 }} transition={{ duration: 0.3, ease: EASE }} className="w-full max-w-xl overflow-hidden rounded-2xl border border-bone/10 bg-[#140c0a] shadow-2xl">
+            <div className="flex items-center gap-3 border-b border-bone/[0.07] px-4">
+              <Search className="h-4 w-4 text-gold" />
               <input
                 ref={input}
                 value={q}
@@ -268,29 +203,21 @@ function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void 
                   }
                   if (e.key === "Escape") onClose();
                 }}
-                className="h-14 w-full bg-transparent text-sm outline-none placeholder:text-muted"
+                className="h-14 w-full bg-transparent text-sm outline-none placeholder:text-bone/30"
                 placeholder="Type an order ID, product or customer…"
               />
-              <button onClick={onClose} aria-label="Close">
-                <X className="h-4 w-4 text-muted" />
-              </button>
+              <button onClick={onClose} aria-label="Close"><X className="h-4 w-4 text-bone/40" /></button>
             </div>
             <ul className="thin-scroll max-h-[50vh] overflow-y-auto p-2">
               {results.map((r) => (
                 <li key={r.group + r.k}>
-                  <button
-                    onClick={() => {
-                      router.push(r.href);
-                      onClose();
-                    }}
-                    className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm text-ink hover:bg-stone hover:text-ink"
-                  >
+                  <button onClick={() => { router.push(r.href); onClose(); }} className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm text-bone/80 hover:bg-bone/5 hover:text-bone">
                     {r.label}
-                    <span className="text-[12px] uppercase tracking-[0.16em] text-muted">{r.group}</span>
+                    <span className="text-[10px] uppercase tracking-[0.16em] text-bone/35">{r.group}</span>
                   </button>
                 </li>
               ))}
-              {results.length === 0 && <li className="px-3 py-6 text-center text-sm text-muted">No matches</li>}
+              {results.length === 0 && <li className="px-3 py-6 text-center text-sm text-bone/40">No matches</li>}
             </ul>
           </motion.div>
         </motion.div>
@@ -304,22 +231,14 @@ export function ExportMenu({ rows, name, sheet = "Data" }: { rows: () => Row[]; 
   const [open, setOpen] = useState(false);
   return (
     <div className="relative">
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="inline-flex h-10 items-center gap-2 border border-ink/12 px-4 text-[13px] text-ink hover:border-line"
-      >
+      <button onClick={() => setOpen((o) => !o)} className="inline-flex h-10 items-center gap-2 rounded-xl border border-bone/12 px-4 text-[13px] text-bone/85 hover:border-bone/30">
         <Download className="h-4 w-4" /> Export <ChevronDown className="h-3.5 w-3.5 opacity-50" />
       </button>
       <AnimatePresence>
         {open && (
           <>
             <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-            <motion.div
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              className="absolute right-0 z-50 mt-2 w-64 overflow-hidden border border-line bg-paper p-1.5"
-            >
+            <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} className="absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-2xl border border-bone/10 bg-[#170e0c] p-1.5 shadow-2xl">
               {[
                 { icon: FileSpreadsheet, label: "Excel workbook (.xlsx)", run: () => exportXlsx({ [sheet]: rows() }, name) },
                 { icon: FileText, label: "CSV (Excel / Numbers)", run: () => exportCsv(rows(), name) },
@@ -339,9 +258,9 @@ export function ExportMenu({ rows, name, sheet = "Data" }: { rows: () => Row[]; 
                     await o.run();
                     if (!o.label.startsWith("Copy")) toast(`${rows().length} rows exported`);
                   }}
-                  className="flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm text-ink hover:bg-stone hover:text-ink"
+                  className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm text-bone/80 hover:bg-bone/5 hover:text-bone"
                 >
-                  <o.icon className="h-4 w-4 text-clay" /> {o.label}
+                  <o.icon className="h-4 w-4 text-gold" /> {o.label}
                 </button>
               ))}
             </motion.div>

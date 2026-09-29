@@ -198,5 +198,4 @@ export type JournalPost = {
   date: string;
   body: L[];
   visual: VisualKind;
-  image: string;
 };

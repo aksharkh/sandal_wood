@@ -1,43 +1,56 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────
-   Santalum Maison — "Gallery light"
-   Warm paper surfaces, near-black type, one sandalwood-red accent.
-   Every text/background pair below is ≥ 4.5:1 unless marked decorative.
+   Santalum Maison — design tokens
+   Palette drawn from Pterocarpus santalinus heartwood: ebony shadow,
+   oxblood core, ember highlight, brass "gold-star" fleck, bone paper.
    ────────────────────────────────────────────────────────────── */
 @theme inline {
-  --color-page: #f4efe7;      /* ivory — default surface */
-  --color-paper: #fbf8f3;     /* cards, drawers */
-  --color-stone: #e8e0d4;     /* alternate section */
-  --color-sand: #d9cdbb;      /* image placeholders, subtle fills */
-  --color-line: #d6cbbb;      /* hairlines */
-  --color-ink: #1c1a17;       /* primary text */
-  --color-graphite: #4a4540;  /* secondary text */
-  --color-muted: #7a7169;     /* tertiary text / captions */
-  --color-clay: #6e2a1f;      /* sandalwood red — accent & the one dark chapter */
-  --color-clay-deep: #4f1d15;
-  --color-rose: #e9d6cc;      /* light accent tint */
-  --color-moss: #3f5a45;      /* success */
-  --color-danger: #a3362a;
+  --color-ink: #0b0706;
+  --color-umber: #140c0a;
+  --color-cocoa: #1d1210;
+  --color-oxblood: #3a0f0b;
+  --color-santal: #9e2f1f;
+  --color-ember: #c8553a;
+  --color-blush: #e8a58f;
+  --color-gold: #c9a46a;
+  --color-brass: #a88449;
+  --color-bone: #efe6d8;
+  --color-parchment: #e4d8c6;
+  --color-sand: #cbbba3;
+  --color-jade: #7fa38a;
+  --color-danger: #e0604a;
 
-  /* Legacy names kept for the admin console (light) */
-  --color-bone: #1c1a17;
-  --color-gold: #6e2a1f;
-  --color-ember: #6e2a1f;
-  --color-blush: #6e2a1f;
-  --color-jade: #3f5a45;
-
-  --font-display: var(--font-instrument), var(--font-noto-serif-sc), "Songti SC", serif;
-  --font-sans: var(--font-inter), var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-display: var(--font-cormorant), var(--font-noto-serif-sc), "Songti SC", "SimSun", serif;
+  --font-sans: var(--font-manrope), var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-silk: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --animate-marquee: marquee 48s linear infinite;
+  --animate-spin-slow: spin 40s linear infinite;
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-shimmer: shimmer 3.2s var(--ease-silk) infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(2deg); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 :root {
-  --background: #f4efe7;
-  --foreground: #1c1a17;
-  color-scheme: light;
+  --background: #0b0706;
+  --foreground: #efe6d8;
+  color-scheme: dark;
 }
 
 html {
@@ -46,6 +59,7 @@ html {
 }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
 
 body {
   background: var(--background);
@@ -53,48 +67,97 @@ body {
   font-family: var(--font-sans);
   font-feature-settings: "ss01", "cv11";
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: #6e2a1f; color: #fbf8f3; }
+::selection { background: #9e2f1f; color: #efe6d8; }
+
+/* Film grain laid over the whole site — gives the dark surfaces a material, printed quality */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+}
+
+/* Hairline with a brass glint */
+.hairline { height: 1px; background: linear-gradient(90deg, transparent, rgba(201,164,106,.45), transparent); }
+
+.text-gradient-gold {
+  background: linear-gradient(100deg, #e9cf9f 0%, #c9a46a 35%, #8a6a3a 55%, #e9cf9f 80%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.text-gradient-ember {
+  background: linear-gradient(120deg, #f0b39b 0%, #c8553a 40%, #9e2f1f 75%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass {
+  background: linear-gradient(160deg, rgba(239,230,216,.06), rgba(239,230,216,.02));
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(239,230,216,.08);
+}
+
+.shimmer-line {
+  background: linear-gradient(90deg, transparent 0%, rgba(201,164,106,.7) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
-.thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-.thin-scroll::-webkit-scrollbar-thumb { background: rgba(28,26,23,.15); border-radius: 99px; }
 
-/* Quiet, underlined form fields */
+.thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: rgba(239,230,216,.12); border-radius: 99px; }
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* Form controls: quiet, underlined, luxurious */
 .field {
   width: 100%;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #d6cbbb;
-  padding: .85rem 0 .65rem;
-  color: #1c1a17;
+  border-bottom: 1px solid rgba(239,230,216,.18);
+  padding: .9rem 0 .7rem;
+  color: #efe6d8;
   font-size: .95rem;
   outline: none;
-  transition: border-color .3s;
-  border-radius: 0;
+  transition: border-color .4s var(--ease-lux);
 }
-.field::placeholder { color: #9a9087; }
-.field:focus { border-bottom-color: #1c1a17; }
+.field::placeholder { color: rgba(239,230,216,.35); }
+.field:focus { border-bottom-color: #c9a46a; }
+select.field option { background: #140c0a; color: #efe6d8; }
 
 .admin-input {
   width: 100%;
-  background: #fff;
-  border: 1px solid #ddd3c5;
-  border-radius: .5rem;
-  padding: .55rem .75rem;
-  color: #1c1a17;
+  background: rgba(239,230,216,.03);
+  border: 1px solid rgba(239,230,216,.1);
+  border-radius: .75rem;
+  padding: .6rem .8rem;
+  color: #efe6d8;
   font-size: .85rem;
   outline: none;
-  transition: border-color .2s, box-shadow .2s;
+  transition: border-color .3s, background .3s;
 }
-.admin-input:focus { border-color: #1c1a17; box-shadow: 0 0 0 3px rgba(28,26,23,.06); }
-
-/* Editorial body copy */
-.prose-lux p + p { margin-top: 1.1em; }
+.admin-input:focus { border-color: rgba(201,164,106,.6); background: rgba(239,230,216,.05); }
+select.admin-input option { background: #140c0a; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .grain::after { animation: none; }
 }

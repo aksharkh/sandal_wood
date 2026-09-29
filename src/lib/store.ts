@@ -246,7 +246,7 @@ export const useMaison = create<MaisonState>()(
       setContent: (c) => set((s) => ({ content: { ...s.content, ...c } })),
       resetDemo: () => set(seed()),
     }),
-    { name: "sm-maison-v3", storage: createJSONStorage(() => localStorage), skipHydration: true },
+    { name: "sm-maison-v2", storage: createJSONStorage(() => localStorage), skipHydration: true },
   ),
 );
 

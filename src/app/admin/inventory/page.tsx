@@ -6,7 +6,7 @@ import { useMaison } from "@/lib/store";
 import { Btn, PageHead, Panel, Th, toast } from "@/components/admin/ui";
 import { ExportMenu } from "@/components/admin/Shell";
 import { BarList } from "@/components/admin/charts";
-import { ProductPhoto } from "@/components/motion/primitives";
+import { ProductVisual } from "@/components/visual/ProductVisual";
 import { productRows } from "@/lib/export";
 import { cn, money } from "@/lib/utils";
 
@@ -26,9 +26,7 @@ export default function InventoryPage() {
   const rows = useMemo(() => {
     const sold30 = new Map<string, number>();
     const cutoff = now - 30 * 864e5;
-    orders
-      .filter((o) => new Date(o.createdAt).getTime() > cutoff && o.status !== "cancelled")
-      .forEach((o) => o.lines.forEach((l) => sold30.set(l.variantId, (sold30.get(l.variantId) ?? 0) + l.qty)));
+    orders.filter((o) => new Date(o.createdAt).getTime() > cutoff && o.status !== "cancelled").forEach((o) => o.lines.forEach((l) => sold30.set(l.variantId, (sold30.get(l.variantId) ?? 0) + l.qty)));
     return products.flatMap((p) =>
       p.variants.map((v) => {
         const velocity = sold30.get(v.id) ?? 0;
@@ -61,27 +59,12 @@ export default function InventoryPage() {
     const delta = next - r.v.stock;
     if (!delta) return;
     setVariantStock(pid, vid, next);
-    setLog((l) =>
-      [
-        {
-          at: new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }),
-          sku: r.v.sku,
-          name: `${r.p.name.en} · ${r.v.label.en}`,
-          delta,
-          reason: why,
-        },
-        ...l,
-      ].slice(0, 30),
-    );
+    setLog((l) => [{ at: new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }), sku: r.v.sku, name: `${r.p.name.en} · ${r.v.label.en}`, delta, reason: why }, ...l].slice(0, 30));
   };
 
   return (
     <div className="space-y-6">
-      <PageHead
-        title="Inventory"
-        sub="Per-variant stock, sell-through and batch balances"
-        actions={<ExportMenu name="inventory" sheet="Inventory" rows={() => productRows(products)} />}
-      />
+      <PageHead title="Inventory" sub="Per-variant stock, sell-through and batch balances" actions={<ExportMenu name="inventory" sheet="Inventory" rows={() => productRows(products)} />} />
 
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
         {[
@@ -90,16 +73,9 @@ export default function InventoryPage() {
           { k: `Low (≤${threshold})`, v: String(totals.low), warn: totals.low > 0, f: "low" as const },
           { k: "Out of stock", v: String(totals.out), warn: totals.out > 0, f: "out" as const },
         ].map((k) => (
-          <button
-            key={k.k}
-            onClick={() => k.f && setFilter(filter === k.f ? "all" : k.f)}
-            className={cn(
-              "border p-5 text-left transition-colors",
-              k.f && filter === k.f ? "border-clay/50 bg-clay/[0.05]" : k.warn ? "border-[#e2b340]/25 bg-[#e2b340]/[0.04]" : "border-line bg-stone",
-            )}
-          >
-            <p className="text-[12px] uppercase tracking-[0.18em] text-muted">{k.k}</p>
-            <p className="mt-3 font-display text-4xl tabular-nums">{k.v}</p>
+          <button key={k.k} onClick={() => k.f && setFilter(filter === k.f ? "all" : k.f)} className={cn("rounded-3xl border p-5 text-left transition-colors", k.f && filter === k.f ? "border-gold/50 bg-gold/[0.05]" : k.warn ? "border-[#e2b340]/25 bg-[#e2b340]/[0.04]" : "border-bone/[0.07] bg-bone/[0.02]")}>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-bone/45">{k.k}</p>
+            <p className="mt-3 font-display text-4xl font-light tabular-nums">{k.v}</p>
           </button>
         ))}
       </div>
@@ -107,37 +83,20 @@ export default function InventoryPage() {
       <div className="grid gap-4 xl:grid-cols-[1fr_320px]">
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex h-10 min-w-[240px] flex-1 items-center gap-2 border border-line bg-stone px-3 focus-within:border-ink/50">
-              <Search className="h-4 w-4 text-muted" />
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Product, SKU or batch"
-                className="w-full bg-transparent text-sm outline-none placeholder:text-muted"
-              />
+            <div className="flex h-10 min-w-[240px] flex-1 items-center gap-2 rounded-xl border border-bone/10 bg-bone/[0.02] px-3 focus-within:border-gold/50">
+              <Search className="h-4 w-4 text-bone/40" />
+              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Product, SKU or batch" className="w-full bg-transparent text-sm outline-none placeholder:text-bone/30" />
             </div>
-            <label className="flex items-center gap-2 text-xs text-graphite">
+            <label className="flex items-center gap-2 text-xs text-bone/50">
               Low-stock threshold
-              <input
-                type="number"
-                min={1}
-                value={threshold}
-                onChange={(e) => setThreshold(Math.max(1, Number(e.target.value)))}
-                className="admin-input !w-16"
-              />
+              <input type="number" min={1} value={threshold} onChange={(e) => setThreshold(Math.max(1, Number(e.target.value)))} className="admin-input !w-16" />
             </label>
-            <input
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              className="admin-input !w-56"
-              placeholder="Adjustment reason"
-              aria-label="Adjustment reason"
-            />
+            <input value={reason} onChange={(e) => setReason(e.target.value)} className="admin-input !w-56" placeholder="Adjustment reason" aria-label="Adjustment reason" />
           </div>
           <Panel pad={false}>
             <div className="thin-scroll overflow-x-auto">
               <table className="w-full min-w-[820px] text-sm">
-                <thead className="border-b border-line">
+                <thead className="border-b border-bone/[0.06]">
                   <tr>
                     <Th className="pl-6">Item</Th>
                     <Th>SKU</Th>
@@ -150,78 +109,43 @@ export default function InventoryPage() {
                 </thead>
                 <tbody>
                   {list.map(({ p, v, velocity, cover }) => (
-                    <tr key={v.id} className="border-t border-line hover:bg-stone">
+                    <tr key={v.id} className="border-t border-bone/[0.04] hover:bg-bone/[0.02]">
                       <td className="py-2.5 pl-6">
                         <div className="flex items-center gap-3">
-                          <span className="h-10 w-10 shrink-0 overflow-hidden bg-stone">
-                            <ProductPhoto p={p} className="h-full w-full" sizes="96px" />
-                          </span>
+                          <span className="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-[#1a100d]"><ProductVisual kind={p.visual} tone={p.tone} image={p.images?.[0]} className="h-full w-full" glow={false} /></span>
                           <span>
-                            <span className="block text-ink">{p.name.en}</span>
-                            <span className="text-[12px] text-muted">{v.label.en}</span>
+                            <span className="block text-bone/85">{p.name.en}</span>
+                            <span className="text-[11px] text-bone/40">{v.label.en}</span>
                           </span>
                         </div>
                       </td>
-                      <td className="px-4 font-mono text-xs text-graphite">{v.sku}</td>
-                      <td className="px-4 font-mono text-xs text-graphite">{p.provenance.batch}</td>
-                      <td className="px-4 tabular-nums text-graphite">{velocity}</td>
+                      <td className="px-4 font-mono text-xs text-bone/55">{v.sku}</td>
+                      <td className="px-4 font-mono text-xs text-bone/55">{p.provenance.batch}</td>
+                      <td className="px-4 tabular-nums text-bone/60">{velocity}</td>
                       <td className="px-4">
-                        {cover === null ? (
-                          <span className="text-muted">—</span>
-                        ) : (
-                          <span className={cn("tabular-nums", cover < 14 ? "text-[#7d5a0e]" : "text-graphite")}>{cover}d</span>
-                        )}
+                        {cover === null ? <span className="text-bone/30">—</span> : <span className={cn("tabular-nums", cover < 14 ? "text-[#e8c264]" : "text-bone/60")}>{cover}d</span>}
                       </td>
                       <td className="px-4">
                         <div className="flex items-center gap-1">
-                          <button
-                            onClick={() => adjust(p.id, v.id, v.stock - 1, "Manual −1")}
-                            className="grid h-7 w-7 place-items-center border border-line text-graphite hover:text-ink"
-                            aria-label="Decrease"
-                          >
-                            <Minus className="h-3 w-3" />
-                          </button>
+                          <button onClick={() => adjust(p.id, v.id, v.stock - 1, "Manual −1")} className="grid h-7 w-7 place-items-center rounded-lg border border-bone/10 text-bone/60 hover:text-bone" aria-label="Decrease"><Minus className="h-3 w-3" /></button>
                           <input
                             key={v.stock}
                             defaultValue={v.stock}
                             onBlur={(e) => adjust(p.id, v.id, Math.max(0, Number(e.target.value) || 0))}
                             onKeyDown={(e) => e.key === "Enter" && (e.target as HTMLInputElement).blur()}
-                            className={cn(
-                              "h-7 w-14 border border-line bg-transparent text-center tabular-nums outline-none focus:border-clay/50",
-                              v.stock === 0 ? "text-[#a3362a]" : v.stock <= threshold ? "text-[#7d5a0e]" : "text-ink",
-                            )}
+                            className={cn("h-7 w-14 rounded-lg border border-bone/10 bg-transparent text-center tabular-nums outline-none focus:border-gold/50", v.stock === 0 ? "text-[#fa9a9a]" : v.stock <= threshold ? "text-[#e8c264]" : "text-bone")}
                             aria-label={`Stock for ${v.sku}`}
                           />
-                          <button
-                            onClick={() => adjust(p.id, v.id, v.stock + 1, "Manual +1")}
-                            className="grid h-7 w-7 place-items-center border border-line text-graphite hover:text-ink"
-                            aria-label="Increase"
-                          >
-                            <Plus className="h-3 w-3" />
-                          </button>
-                          {v.stock <= threshold && <AlertTriangle className="ml-1 h-3.5 w-3.5 text-[#7d5a0e]" aria-label="Low stock" />}
+                          <button onClick={() => adjust(p.id, v.id, v.stock + 1, "Manual +1")} className="grid h-7 w-7 place-items-center rounded-lg border border-bone/10 text-bone/60 hover:text-bone" aria-label="Increase"><Plus className="h-3 w-3" /></button>
+                          {v.stock <= threshold && <AlertTriangle className="ml-1 h-3.5 w-3.5 text-[#e8c264]" aria-label="Low stock" />}
                         </div>
                       </td>
                       <td className="pr-6 text-right">
-                        <Btn
-                          size="sm"
-                          onClick={() => {
-                            adjust(p.id, v.id, v.stock + 10);
-                            toast(`+10 × ${v.sku}`);
-                          }}
-                        >
-                          <PackagePlus className="h-3.5 w-3.5" /> +10
-                        </Btn>
+                        <Btn size="sm" onClick={() => { adjust(p.id, v.id, v.stock + 10); toast(`+10 × ${v.sku}`); }}><PackagePlus className="h-3.5 w-3.5" /> +10</Btn>
                       </td>
                     </tr>
                   ))}
-                  {list.length === 0 && (
-                    <tr>
-                      <td colSpan={7} className="py-14 text-center text-muted">
-                        Nothing here.
-                      </td>
-                    </tr>
-                  )}
+                  {list.length === 0 && <tr><td colSpan={7} className="py-14 text-center text-bone/40">Nothing here.</td></tr>}
                 </tbody>
               </table>
             </div>
@@ -229,25 +153,20 @@ export default function InventoryPage() {
         </div>
         <div className="space-y-4">
           <Panel title="Units by batch">
-            <BarList items={byBatch} format={(n) => `${n} u`} colorFor={() => "#4a4540"} />
+            <BarList items={byBatch} format={(n) => `${n} u`} colorFor={() => "#b88a14"} />
           </Panel>
           <Panel title="Adjustment log (this session)">
             <ul className="thin-scroll max-h-[340px] space-y-3 overflow-y-auto text-xs">
               {log.map((l, i) => (
                 <li key={i} className="flex justify-between gap-3">
                   <span className="min-w-0">
-                    <span className="block truncate text-ink">{l.name}</span>
-                    <span className="text-muted">
-                      {l.at} · {l.reason}
-                    </span>
+                    <span className="block truncate text-bone/80">{l.name}</span>
+                    <span className="text-bone/35">{l.at} · {l.reason}</span>
                   </span>
-                  <span className={cn("shrink-0 tabular-nums", l.delta > 0 ? "text-[#2f6b45]" : "text-[#a3362a]")}>
-                    {l.delta > 0 ? "+" : ""}
-                    {l.delta}
-                  </span>
+                  <span className={cn("shrink-0 tabular-nums", l.delta > 0 ? "text-[#7ee8a3]" : "text-[#fa9a9a]")}>{l.delta > 0 ? "+" : ""}{l.delta}</span>
                 </li>
               ))}
-              {log.length === 0 && <li className="text-muted">Stock changes you make appear here.</li>}
+              {log.length === 0 && <li className="text-bone/35">Stock changes you make appear here.</li>}
             </ul>
           </Panel>
         </div>

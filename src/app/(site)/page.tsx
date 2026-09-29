@@ -1,37 +1,26 @@
-import {
-  CircleEnquiriesContact,
-  Collections,
-  Curated,
-  Founder,
-  Gifting,
-  Hero,
-  Intro,
-  Journal,
-  LookCloser,
-  Making,
-  Meet,
-  Pillars,
-  Provenance,
-  ScienceSourcing,
-} from "@/components/home/Home";
+import { CollectionsRail, Hero, MaterialIntro, MeetRedSandalwood, Pillars } from "@/components/home/HomeA";
+import { LookCloser, Making, ProvenanceBlock, ScienceBlock, Sourcing, StartWithMaterial } from "@/components/home/HomeB";
+import { Circle, EnquiriesContact, Founder, Gifting, JournalTeaser } from "@/components/home/HomeC";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <Intro />
-      <Meet />
+      <MaterialIntro />
+      <MeetRedSandalwood />
       <Pillars />
-      <Collections />
-      <Curated />
+      <CollectionsRail />
+      <StartWithMaterial />
       <LookCloser />
       <Making />
-      <Provenance />
-      <ScienceSourcing />
+      <ProvenanceBlock />
+      <ScienceBlock />
+      <Sourcing />
       <Gifting />
-      <Journal />
+      <Circle />
+      <JournalTeaser />
       <Founder />
-      <CircleEnquiriesContact />
+      <EnquiriesContact />
     </>
   );
 }

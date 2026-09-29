@@ -22,23 +22,18 @@ function SearchInner() {
   const results = useMemo(() => (initial ? searchProducts(products, initial) : products), [products, initial]);
 
   return (
-    <div className="mx-auto max-w-[1440px] px-5 pb-32 pt-12 md:px-10">
+    <div className="mx-auto max-w-[1600px] px-5 pb-32 pt-40 md:px-10">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           router.push(`/search?q=${encodeURIComponent(q)}`);
         }}
-        className="flex items-center gap-4 border-b border-line pb-4 focus-within:border-ink"
+        className="flex items-center gap-4 border-b border-bone/20 pb-4 focus-within:border-gold"
       >
-        <Search className="h-6 w-6 text-ink" strokeWidth={1.2} />
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder={t("search.placeholder")}
-          className="w-full bg-transparent font-display text-4xl outline-none placeholder:text-muted md:text-5xl"
-        />
+        <Search className="h-7 w-7 text-gold" strokeWidth={1.2} />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("search.placeholder")} className="w-full bg-transparent font-display text-4xl outline-none placeholder:text-bone/25 md:text-6xl" />
       </form>
-      <p className="mt-6 text-sm text-graphite">
+      <p className="mt-6 text-sm text-bone/50">
         {initial ? (zh ? `“${initial}” 共 ${results.length} 件结果` : `${results.length} results for “${initial}”`) : zh ? "全部作品" : "All objects"}
       </p>
       <div className="mt-12 grid grid-cols-2 gap-x-4 gap-y-14 md:gap-x-6 lg:grid-cols-4">

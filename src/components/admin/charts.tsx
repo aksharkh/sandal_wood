@@ -9,7 +9,7 @@ export function AreaChart({
   data,
   format,
   height = 260,
-  color = "#9e3a26",
+  color = "#d9573a",
 }: {
   data: { label: string; value: number }[];
   format: (n: number) => string;
@@ -49,40 +49,32 @@ export function AreaChart({
           </linearGradient>
         </defs>
         {ticks.map((t) => (
-          <line key={t} x1={pad.l} x2={W - pad.r} y1={y(t)} y2={y(t)} stroke="rgba(28,26,23,.06)" strokeDasharray="2 4" vectorEffect="non-scaling-stroke" />
+          <line key={t} x1={pad.l} x2={W - pad.r} y1={y(t)} y2={y(t)} stroke="rgba(239,230,216,.06)" strokeDasharray="2 4" vectorEffect="non-scaling-stroke" />
         ))}
-        <line x1={pad.l} x2={W - pad.r} y1={H - pad.b} y2={H - pad.b} stroke="rgba(28,26,23,.12)" vectorEffect="non-scaling-stroke" />
+        <line x1={pad.l} x2={W - pad.r} y1={H - pad.b} y2={H - pad.b} stroke="rgba(239,230,216,.12)" vectorEffect="non-scaling-stroke" />
         <motion.path d={area} fill="url(#area-fill)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }} />
-        <motion.path
-          d={line}
-          fill="none"
-          stroke={color}
-          strokeWidth="2"
-          vectorEffect="non-scaling-stroke"
-          strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.6, ease: EASE }}
-        />
-        {hover !== null && <line x1={x(hover)} x2={x(hover)} y1={pad.t} y2={H - pad.b} stroke="rgba(28,26,23,.25)" vectorEffect="non-scaling-stroke" />}
+        <motion.path d={line} fill="none" stroke={color} strokeWidth="2" vectorEffect="non-scaling-stroke" strokeLinejoin="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.6, ease: EASE }} />
+        {hover !== null && (
+          <line x1={x(hover)} x2={x(hover)} y1={pad.t} y2={H - pad.b} stroke="rgba(239,230,216,.25)" vectorEffect="non-scaling-stroke" />
+        )}
       </svg>
       {/* HTML overlays keep text crisp regardless of the stretched SVG */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-between px-1 text-[12px] text-muted">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-between px-1 text-[10px] text-bone/35">
         {data.map((d, i) => (i % labelEvery === 0 || i === data.length - 1 ? <span key={i}>{d.label}</span> : null))}
       </div>
-      <div className="pointer-events-none absolute left-1 top-0 text-[12px] text-muted">{format(max)}</div>
+      <div className="pointer-events-none absolute left-1 top-0 text-[10px] text-bone/30">{format(max)}</div>
       {hover !== null && (
         <>
           <span
-            className="pointer-events-none absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-paper"
+            className="pointer-events-none absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#140c0a]"
             style={{ left: `${(x(hover) / W) * 100}%`, top: y(data[hover].value), background: color }}
           />
           <div
-            className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full border border-line bg-paper px-3 py-2 text-xs"
+            className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full rounded-xl border border-bone/10 bg-[#1b1210]/95 px-3 py-2 text-xs shadow-xl backdrop-blur"
             style={{ left: `${Math.min(88, Math.max(12, (x(hover) / W) * 100))}%`, top: y(data[hover].value) - 12 }}
           >
-            <p className="text-graphite">{data[hover].label}</p>
-            <p className="mt-0.5 font-medium text-ink">{format(data[hover].value)}</p>
+            <p className="text-bone/50">{data[hover].label}</p>
+            <p className="mt-0.5 font-medium text-bone">{format(data[hover].value)}</p>
           </div>
         </>
       )}
@@ -107,33 +99,31 @@ export function BarList({
       {items.map((it, i) => (
         <li key={it.key ?? it.label} onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} className="group relative">
           <div className="flex items-baseline justify-between gap-3 text-sm">
-            <span className="truncate text-ink">{it.label}</span>
-            <span className="shrink-0 tabular-nums text-graphite">{format(it.value)}</span>
+            <span className="truncate text-bone/80">{it.label}</span>
+            <span className="shrink-0 tabular-nums text-bone/60">{format(it.value)}</span>
           </div>
-          <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-stone">
+          <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-bone/[0.05]">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${(it.value / max) * 100}%` }}
               transition={{ duration: 1.1, ease: EASE, delay: i * 0.05 }}
               className="h-full rounded-full"
-              style={{ background: colorFor?.(it.label) ?? "#9e3a26", opacity: hover === null || hover === i ? 1 : 0.45 }}
+              style={{ background: colorFor?.(it.label) ?? "#d9573a", opacity: hover === null || hover === i ? 1 : 0.45 }}
             />
           </div>
-          {it.sub && <p className="mt-1 text-[12px] text-muted">{it.sub}</p>}
+          {it.sub && <p className="mt-1 text-[11px] text-bone/35">{it.sub}</p>}
         </li>
       ))}
     </ul>
   );
 }
 
-export function Sparkline({ values, color = "#9e3a26" }: { values: number[]; color?: string }) {
+export function Sparkline({ values, color = "#d9573a" }: { values: number[]; color?: string }) {
   const d = useMemo(() => {
     const max = Math.max(1, ...values);
     const min = Math.min(...values);
     return values
-      .map(
-        (v, i) => `${i ? "L" : "M"}${((i / Math.max(1, values.length - 1)) * 100).toFixed(1)},${(28 - ((v - min) / Math.max(1, max - min)) * 24).toFixed(1)}`,
-      )
+      .map((v, i) => `${i ? "L" : "M"}${((i / Math.max(1, values.length - 1)) * 100).toFixed(1)},${(28 - ((v - min) / Math.max(1, max - min)) * 24).toFixed(1)}`)
       .join(" ");
   }, [values]);
   return (
@@ -145,10 +135,7 @@ export function Sparkline({ values, color = "#9e3a26" }: { values: number[]; col
 
 /** Region share as a single segmented bar with a labelled legend below. */
 export function SegmentBar({ parts, format }: { parts: { label: string; value: number; color: string }[]; format: (n: number) => string }) {
-  const total = Math.max(
-    1,
-    parts.reduce((s, p) => s + p.value, 0),
-  );
+  const total = Math.max(1, parts.reduce((s, p) => s + p.value, 0));
   const [hover, setHover] = useState<string | null>(null);
   return (
     <div>
@@ -170,11 +157,11 @@ export function SegmentBar({ parts, format }: { parts: { label: string; value: n
       <ul className="mt-5 space-y-2.5">
         {parts.map((p) => (
           <li key={p.label} className="flex items-center justify-between text-sm" onMouseEnter={() => setHover(p.label)} onMouseLeave={() => setHover(null)}>
-            <span className="flex items-center gap-2 text-ink">
+            <span className="flex items-center gap-2 text-bone/75">
               <span className="h-2.5 w-2.5 rounded-sm" style={{ background: p.color }} /> {p.label}
             </span>
-            <span className="tabular-nums text-graphite">
-              {format(p.value)} <span className="ml-2 text-muted">{Math.round((p.value / total) * 100)}%</span>
+            <span className="tabular-nums text-bone/60">
+              {format(p.value)} <span className="ml-2 text-bone/35">{Math.round((p.value / total) * 100)}%</span>
             </span>
           </li>
         ))}

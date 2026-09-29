@@ -1,14 +1,14 @@
 import {
-  CircleEnquiriesContact,
+  Closing,
   Collections,
   Curated,
   Founder,
   Gifting,
   Hero,
-  Intro,
   Journal,
   LookCloser,
   Making,
+  MaterialMarquee,
   Meet,
   Pillars,
   Provenance,
@@ -19,7 +19,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <Intro />
+      <MaterialMarquee />
       <Meet />
       <Pillars />
       <Collections />
@@ -29,9 +29,9 @@ export default function HomePage() {
       <Provenance />
       <ScienceSourcing />
       <Gifting />
-      <Journal />
       <Founder />
-      <CircleEnquiriesContact />
+      <Journal />
+      <Closing />
     </>
   );
 }

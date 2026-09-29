@@ -139,7 +139,7 @@ export function ProductDetail({ slug }: { slug: string }) {
           <div className="lg:col-span-7">
             <div className="grid gap-3 md:grid-cols-2">
               {gallery.map((src, i) => (
-                <Photo key={i} src={src} alt={`${l(p.name)} — ${i + 1}`} priority={i === 0} className={cn(i === 0 ? "aspect-[4/5] md:col-span-2" : "aspect-[4/5]")} sizes={i === 0 ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 29vw, 50vw"} />
+                <Photo key={i} src={src} alt={`${l(p.name)} — ${i + 1}`} priority={i === 0} shape={i === 0 ? "arch" : "soft"} className={cn(i === 0 ? "aspect-[4/5] md:col-span-2" : "aspect-[4/5] rounded-[28px]")} sizes={i === 0 ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 29vw, 50vw"} />
               ))}
             </div>
           </div>
@@ -147,7 +147,7 @@ export function ProductDetail({ slug }: { slug: string }) {
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-[140px]">
               <Label>{l(coll?.name)}</Label>
-              <Heading as="h1" className="mt-3 text-[clamp(2.4rem,3.6vw,3.4rem)]">{l(p.name)}</Heading>
+              <Heading as="h1" className="mt-5 text-[clamp(2.8rem,4.4vw,4.4rem)]">{l(p.name)}</Heading>
               <p className="mt-2 text-[14px] text-graphite">{l(p.subtitle)}</p>
 
               <div className="mt-5 flex items-center justify-between">
@@ -175,8 +175,8 @@ export function ProductDetail({ slug }: { slug: string }) {
                       onClick={() => setVariantId(v.id)}
                       disabled={v.stock === 0}
                       className={cn(
-                        "border px-4 py-2.5 text-[13px] transition-colors",
-                        variant.id === v.id ? "border-ink bg-ink text-page" : "border-line hover:border-ink",
+                        "rounded-full border px-5 py-2.5 text-[13px] transition-colors",
+                        variant.id === v.id ? "border-ink bg-ink text-cream" : "border-ink/20 hover:border-ink",
                         v.stock === 0 && "cursor-not-allowed text-muted line-through",
                       )}
                     >
@@ -190,19 +190,19 @@ export function ProductDetail({ slug }: { slug: string }) {
               </div>
 
               <div className="mt-6 flex gap-3">
-                <div className="flex h-14 items-center border border-line">
+                <div className="flex h-14 items-center rounded-full border border-ink/20">
                   <button className="grid h-full w-11 place-items-center" onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Decrease"><Minus className="h-3.5 w-3.5" /></button>
                   <span className="w-6 text-center tabular-nums">{qty}</span>
                   <button className="grid h-full w-11 place-items-center" onClick={() => setQty((q) => Math.min(10, q + 1))} aria-label="Increase"><Plus className="h-3.5 w-3.5" /></button>
                 </div>
-                <Button onClick={() => add()} size="lg" className="flex-1">{added ? t("cta.added") : t("cta.add")}</Button>
-                <button onClick={() => toggleWish(p.id)} aria-label={t("nav.wishlist")} className="grid h-14 w-14 place-items-center border border-line hover:border-ink">
+                <Button onClick={() => add()} size="lg" className="flex-1" arrow>{added ? t("cta.added") : t("cta.add")}</Button>
+                <button onClick={() => toggleWish(p.id)} aria-label={t("nav.wishlist")} className="grid h-14 w-14 place-items-center rounded-full border border-ink/20 hover:border-ink">
                   <Heart className={cn("h-5 w-5", wished && "fill-clay text-clay")} strokeWidth={1.4} />
                 </button>
               </div>
               <Button onClick={() => add(true)} variant="outline" size="lg" className="mt-3 w-full">{t("cta.buy")}</Button>
 
-              <div className="mt-6 bg-stone p-5 text-[13px]">
+              <div className="mt-6 rounded-[28px] bg-stone p-6 text-[13px]">
                 {currency !== "CNY" ? (
                   <>
                     <p className="text-graphite">{zh ? "查询送达时间" : "Check delivery date"}</p>

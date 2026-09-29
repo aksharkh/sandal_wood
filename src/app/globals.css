@@ -1,30 +1,39 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────
-   Santalum Maison — "Gallery light"
-   Warm paper surfaces, near-black type, one sandalwood-red accent.
-   Every text/background pair below is ≥ 4.5:1 unless marked decorative.
+   Santalum Maison — "Temple & Heartwood"
+   Earth palette drawn from the wood itself: cream sapwood, sand,
+   sandalwood maroon, cocoa heartwood, blush dust. Each section owns one
+   surface colour and a matched text colour (all pairs ≥ 4.5:1).
    ────────────────────────────────────────────────────────────── */
 @theme inline {
-  --color-page: #f4efe7;      /* ivory — default surface */
-  --color-paper: #fbf8f3;     /* cards, drawers */
-  --color-stone: #e8e0d4;     /* alternate section */
-  --color-sand: #d9cdbb;      /* image placeholders, subtle fills */
-  --color-line: #d6cbbb;      /* hairlines */
-  --color-ink: #1c1a17;       /* primary text */
-  --color-graphite: #4a4540;  /* secondary text */
-  --color-muted: #7a7169;     /* tertiary text / captions */
-  --color-clay: #6e2a1f;      /* sandalwood red — accent & the one dark chapter */
-  --color-clay-deep: #4f1d15;
-  --color-rose: #e9d6cc;      /* light accent tint */
-  --color-moss: #3f5a45;      /* success */
+  /* Surfaces */
+  --color-page: #f3eadc;       /* cream — default */
+  --color-paper: #faf5ec;      /* raised cream: drawers, cards */
+  --color-stone: #e7d6bf;      /* sand section */
+  --color-sand: #dcc6a8;       /* image placeholder */
+  --color-blush: #ecd3c3;      /* blush section */
+  --color-maroon: #5c1f14;     /* sandalwood maroon section */
+  --color-cocoa: #22140f;      /* heartwood — darkest section, footer */
+
+  /* Type & lines */
+  --color-ink: #2b1a13;        /* on light surfaces */
+  --color-graphite: #5a4238;
+  --color-muted: #75604f;
+  --color-line: #d6c1a4;
+  --color-cream: #f3eadc;      /* on dark surfaces */
+  --color-rose: #e6c2ad;       /* secondary text on maroon/cocoa */
+
+  /* Accents */
+  --color-clay: #7a2a1b;       /* buttons, links on light */
+  --color-clay-deep: #561c12;
+  --color-ember: #d0805f;      /* italic highlights on dark */
+  --color-moss: #3f5a45;
   --color-danger: #a3362a;
 
-  /* Legacy names kept for the admin console (light) */
-  --color-bone: #1c1a17;
-  --color-gold: #6e2a1f;
-  --color-ember: #6e2a1f;
-  --color-blush: #6e2a1f;
+  /* Legacy names used by the admin console */
+  --color-bone: #2b1a13;
+  --color-gold: #7a2a1b;
   --color-jade: #3f5a45;
 
   --font-display: var(--font-instrument), var(--font-noto-serif-sc), "Songti SC", serif;
@@ -32,11 +41,19 @@
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-spin-slow: spin 28s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 :root {
-  --background: #f4efe7;
-  --foreground: #1c1a17;
+  --background: #f3eadc;
+  --foreground: #2b1a13;
   color-scheme: light;
 }
 
@@ -56,44 +73,45 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: #6e2a1f; color: #fbf8f3; }
+::selection { background: #7a2a1b; color: #f3eadc; }
+
+/* Temple-doorway arch: semicircular top on any tall frame. */
+.arch { border-radius: 9999px 9999px 0 0; }
+.arch-sm { border-radius: 240px 240px 0 0; }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 .thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-.thin-scroll::-webkit-scrollbar-thumb { background: rgba(28,26,23,.15); border-radius: 99px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: rgba(43,26,19,.18); border-radius: 99px; }
 
 /* Quiet, underlined form fields */
 .field {
   width: 100%;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #d6cbbb;
+  border-bottom: 1px solid #cdb697;
   padding: .85rem 0 .65rem;
-  color: #1c1a17;
+  color: #2b1a13;
   font-size: .95rem;
   outline: none;
   transition: border-color .3s;
   border-radius: 0;
 }
-.field::placeholder { color: #9a9087; }
-.field:focus { border-bottom-color: #1c1a17; }
+.field::placeholder { color: #8c7766; }
+.field:focus { border-bottom-color: #2b1a13; }
 
 .admin-input {
   width: 100%;
-  background: #fff;
-  border: 1px solid #ddd3c5;
+  background: #fffdf9;
+  border: 1px solid #dcc9ae;
   border-radius: .5rem;
   padding: .55rem .75rem;
-  color: #1c1a17;
+  color: #2b1a13;
   font-size: .85rem;
   outline: none;
   transition: border-color .2s, box-shadow .2s;
 }
-.admin-input:focus { border-color: #1c1a17; box-shadow: 0 0 0 3px rgba(28,26,23,.06); }
-
-/* Editorial body copy */
-.prose-lux p + p { margin-top: 1.1em; }
+.admin-input:focus { border-color: #2b1a13; box-shadow: 0 0 0 3px rgba(43,26,19,.07); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }

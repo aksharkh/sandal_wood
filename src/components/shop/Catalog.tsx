@@ -71,25 +71,25 @@ export function Catalog({ collection }: { collection?: CollectionSlug }) {
               <Link href="/" className="hover:text-ink">Santalum</Link> / <Link href="/collections" className="hover:text-ink">{t("nav.collections")}</Link>
               {info && <> / <span className="text-ink">{l(info.name)}</span></>}
             </nav>
-            <Heading as="h1" className="mt-8 text-[clamp(3rem,5.5vw,5.5rem)]">{info ? l(info.name) : zh ? "全部作品" : "All objects"}</Heading>
+            <Heading as="h1" className="mt-8 text-[clamp(3.4rem,7vw,7rem)]">{info ? <em className="text-clay">{l(info.name)}</em> : zh ? <>全部<em className="text-clay">作品</em></> : <>All <em className="text-clay">objects</em></>}</Heading>
             <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-graphite">
               {info ? l(info.blurb) : zh ? "五个系列，同一种木材——小叶紫檀心材，逐件建档。" : "Five collections in one material — red sandalwood heartwood, every piece documented."}
             </p>
           </div>
           <div className="lg:col-span-5 lg:col-start-8">
-            <Photo src={info?.image ?? "/images/p-grain-red.jpg"} alt={info?.name.en ?? "Red sandalwood"} priority className="aspect-[4/3]" sizes="(min-width: 1024px) 40vw, 100vw" />
+            <Photo src={info?.image ?? "/images/p-grain-red.jpg"} alt={info?.name.en ?? "Red sandalwood"} priority shape="arch" className="mx-auto aspect-[3/4] max-w-[380px]" sizes="(min-width: 1024px) 30vw, 90vw" />
           </div>
         </div>
       </section>
 
-      <div className="sticky top-[110px] z-30 border-y border-line bg-page/95 backdrop-blur">
+      <div className="sticky top-[84px] z-30 mx-3 rounded-full bg-paper/90 shadow-[0_8px_30px_-18px_rgba(43,26,19,0.4)] backdrop-blur md:mx-5">
         <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-4 px-5 text-[13px] md:px-10">
           <div className="no-scrollbar flex items-center gap-6 overflow-x-auto">
-            <Link href="/collections" className={cn("shrink-0", !collection ? "text-ink underline underline-offset-[6px]" : "text-graphite hover:text-ink")}>
+            <Link href="/collections" className={cn("shrink-0 rounded-full px-3 py-1.5", !collection ? "bg-ink text-cream" : "text-graphite hover:text-ink")}>
               {t("common.all")}
             </Link>
             {COLLECTIONS.map((c) => (
-              <Link key={c.slug} href={`/collections/${c.slug}`} className={cn("shrink-0", collection === c.slug ? "text-ink underline underline-offset-[6px]" : "text-graphite hover:text-ink")}>
+              <Link key={c.slug} href={`/collections/${c.slug}`} className={cn("shrink-0 rounded-full px-3 py-1.5", collection === c.slug ? "bg-ink text-cream" : "text-graphite hover:text-ink")}>
                 {l(c.name)}
               </Link>
             ))}
@@ -111,8 +111,8 @@ export function Catalog({ collection }: { collection?: CollectionSlug }) {
         </div>
       </div>
 
-      <section className="mx-auto max-w-[1440px] px-5 pb-28 pt-12 md:px-10">
-        <div className="grid grid-cols-2 gap-x-5 gap-y-14 lg:grid-cols-3 xl:grid-cols-4">
+      <section className="mx-auto max-w-[1440px] px-5 pb-28 pt-16 md:px-10">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-16 lg:grid-cols-3 xl:grid-cols-4">
           {list.map((p, i) => (
             <ProductCard key={p.id} p={p} index={i} />
           ))}

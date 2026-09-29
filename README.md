@@ -1,6 +1,6 @@
 # Santalum Maison — web front-end
 
-Premium red-sandalwood storefront + atelier admin console. Design direction: "Gallery light" (ivory/stone surfaces, near-black type, one sandalwood-red accent; Instrument Serif + Inter Tight). Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, Motion, Zustand.
+Premium red-sandalwood storefront + atelier admin console. Design direction: "Temple & Heartwood" (temple-arch imagery, cream/sand/blush/maroon/cocoa section palette, upright + italic Instrument Serif headlines, scroll-driven hero). Earlier directions live on branches `design-v1-dark` and `design-v2-light`. Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, Motion, Zustand.
 
 ```bash
 npm install

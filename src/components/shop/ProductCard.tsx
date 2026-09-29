@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Plus } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useState } from "react";
 import type { Product } from "@/lib/types";
 import { useShop, useT } from "@/lib/store";
@@ -20,30 +20,28 @@ export function ProductCard({ p, index = 0, tone = "light" }: { p: Product; inde
   const hasRange = p.variants.some((v) => v.priceDelta !== p.variants[0].priceDelta);
   const stock = stockOf(p);
   const second = p.images?.[1];
-  const note = stock > 0 && stock <= 8 ? (zh ? "仅剩少量" : "Few remaining") : p.tags.includes("limited") ? (zh ? "限量" : "Limited") : p.tags.includes("new") ? (zh ? "新品" : "New") : null;
+  const note = stock > 0 && stock <= 8 ? (zh ? "仅剩少量" : "Few remaining") : p.tags.includes("limited") ? (zh ? "限量" : "Limited edition") : p.tags.includes("new") ? (zh ? "新品" : "New") : null;
+  const dark = tone === "dark";
 
   return (
-    <Reveal delay={(index % 4) * 0.07} className="group relative">
-      <div className="relative">
+    <Reveal delay={(index % 4) * 0.06} className="group relative">
+      <div className="relative overflow-hidden">
         <Link href={`/product/${p.slug}`} className="block">
-          <div className="relative">
-            <Photo src={p.images?.[0]} alt={l(p.name)} shape="arch" className="aspect-[3/4]" sizes="(min-width: 1024px) 25vw, 50vw" />
-            {second && (
-              <div className="arch absolute inset-0 overflow-hidden opacity-0 transition-opacity duration-700 group-hover:opacity-100">
-                <Image src={second} alt="" fill sizes="(min-width: 1024px) 25vw, 50vw" className="scale-105 object-cover transition-transform duration-[1.4s] group-hover:scale-100" unoptimized={second.startsWith("data:")} />
-              </div>
-            )}
-          </div>
+          <Photo src={p.images?.[0]} alt={l(p.name)} className="aspect-[3/4]" sizes="(min-width: 1024px) 25vw, 50vw" />
+          {second && (
+            <Image
+              src={second}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 25vw, 50vw"
+              className="object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+              unoptimized={second.startsWith("data:")}
+            />
+          )}
         </Link>
-        {note && (
-          <span className="absolute left-1/2 top-[18%] -translate-x-1/2 rounded-full bg-paper/90 px-3 py-1 text-[11px] text-ink backdrop-blur">{note}</span>
-        )}
-        <button
-          onClick={() => toggleWish(p.id)}
-          aria-label={t("nav.wishlist")}
-          className="absolute bottom-3 left-3 grid h-9 w-9 place-items-center rounded-full bg-paper/90 text-ink backdrop-blur transition-colors hover:bg-paper"
-        >
-          <Heart className={cn("h-4 w-4", wished && "fill-clay text-clay")} strokeWidth={1.5} />
+        {note && <span className="absolute left-3 top-3 text-[10px] font-medium uppercase tracking-[0.16em] text-white mix-blend-difference">{note}</span>}
+        <button onClick={() => toggleWish(p.id)} aria-label={t("nav.wishlist")} className="absolute right-3 top-3 text-white opacity-0 mix-blend-difference transition-opacity group-hover:opacity-100">
+          <Heart className={cn("h-4 w-4", wished && "fill-current")} strokeWidth={1.4} />
         </button>
         <button
           onClick={() => {
@@ -52,25 +50,20 @@ export function ProductCard({ p, index = 0, tone = "light" }: { p: Product; inde
             setTimeout(() => setAdded(false), 1400);
             setTimeout(() => setBagOpen(true), 300);
           }}
-          aria-label={t("cta.add")}
-          className="absolute bottom-3 right-3 flex h-9 items-center overflow-hidden rounded-full bg-ink text-cream transition-all duration-500 ease-[var(--ease-lux)] hover:bg-clay"
+          className="absolute inset-x-0 bottom-0 h-11 translate-y-full bg-white text-[11px] font-medium uppercase tracking-[0.16em] text-ink transition-transform duration-500 ease-[var(--ease-lux)] hover:bg-ink hover:text-white group-hover:translate-y-0"
         >
-          <span className="grid h-9 w-9 shrink-0 place-items-center">
-            <Plus className={cn("h-4 w-4 transition-transform duration-500", added && "rotate-45")} />
-          </span>
-          <span className="max-w-0 overflow-hidden whitespace-nowrap text-[12px] transition-all duration-500 group-hover:max-w-[120px] group-hover:pr-4">
-            {added ? t("cta.added") : t("cta.add")}
-          </span>
+          {added ? t("cta.added") : `${t("cta.add")} +`}
         </button>
       </div>
-      <Link href={`/product/${p.slug}`} className="mt-5 block text-center">
-        <h3 className={cn("font-display text-[22px] leading-tight transition-colors", tone === "dark" ? "text-cream" : "group-hover:text-clay")}>{l(p.name)}</h3>
-        <p className={cn("mt-1 text-[12px]", tone === "dark" ? "text-rose" : "text-muted")}>{l(p.subtitle)}</p>
-        <p className={cn("mt-2 text-[14px] tabular-nums", tone === "dark" ? "text-cream" : "text-ink")}>
-          {hasRange && <span className={tone === "dark" ? "text-rose" : "text-muted"}>{t("common.from")} </span>}
+      <Link href={`/product/${p.slug}`} className="mt-4 flex items-start justify-between gap-4">
+        <span className="min-w-0">
+          <span className={cn("block text-[11px] font-medium uppercase tracking-[0.14em]", dark ? "text-white" : "text-ink")}>{l(p.name)}</span>
+          <span className={cn("mt-1 block truncate text-[12px]", dark ? "text-rose" : "text-muted")}>{l(p.subtitle)}</span>
+        </span>
+        <span className={cn("shrink-0 text-[12px] tabular-nums", dark ? "text-white" : "text-ink")}>
+          {hasRange && <span className={dark ? "text-rose" : "text-muted"}>{t("common.from")} </span>}
           {m(minPrice)}
-          {p.compareAt && <span className={cn("ml-2 line-through", tone === "dark" ? "text-rose" : "text-muted")}>{m(p.compareAt)}</span>}
-        </p>
+        </span>
       </Link>
     </Reveal>
   );

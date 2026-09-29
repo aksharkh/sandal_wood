@@ -5,10 +5,10 @@ import {
   Founder,
   Gifting,
   Hero,
+  Intro,
   Journal,
   LookCloser,
   Making,
-  MaterialMarquee,
   Meet,
   Pillars,
   Provenance,
@@ -19,7 +19,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <MaterialMarquee />
+      <Intro />
       <Meet />
       <Pillars />
       <Collections />
@@ -29,8 +29,8 @@ export default function HomePage() {
       <Provenance />
       <ScienceSourcing />
       <Gifting />
-      <Founder />
       <Journal />
+      <Founder />
       <Closing />
     </>
   );

@@ -1,30 +1,15 @@
-import {
-  Closing,
-  Collections,
-  Curated,
-  Founder,
-  Gifting,
-  Hero,
-  Intro,
-  Journal,
-  LookCloser,
-  Making,
-  Meet,
-  Pillars,
-  Provenance,
-  ScienceSourcing,
-} from "@/components/home/Home";
+import { Closing, Collections, Curated, Curtain, Founder, Gifting, Hero, Intro, Journal, Making, Pillars, Provenance, ScienceSourcing, Ticker } from "@/components/home/Home";
 
 export default function HomePage() {
   return (
     <>
+      <Curtain />
       <Hero />
+      <Ticker />
       <Intro />
-      <Meet />
-      <Pillars />
       <Collections />
       <Curated />
-      <LookCloser />
+      <Pillars />
       <Making />
       <Provenance />
       <ScienceSourcing />

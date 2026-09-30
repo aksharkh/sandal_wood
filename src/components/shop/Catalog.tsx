@@ -82,7 +82,7 @@ export function Catalog({ collection }: { collection?: CollectionSlug }) {
         </div>
       </section>
 
-      <div className="sticky top-[97px] z-30 border-y border-line bg-white">
+      <div className="sticky top-[72px] z-30 border-y border-line bg-paper">
         <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-4 px-5 text-[13px] md:px-10">
           <div className="no-scrollbar flex items-center gap-6 overflow-x-auto">
             <Link href="/collections" className={cn("shrink-0 uppercase tracking-[0.14em] text-[11px] font-medium", !collection ? "text-ink underline underline-offset-[6px]" : "text-muted hover:text-ink")}>

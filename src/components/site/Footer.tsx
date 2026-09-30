@@ -17,7 +17,7 @@ export function QrMark({ seed = 7, className }: { seed?: number; className?: str
         const x = i % n;
         const y = Math.floor(i / n);
         if (finder(x, y)) return null;
-        return r() > 0.52 ? <rect key={i} x={x} y={y} width="1" height="1" fill="#0e0e0e" /> : null;
+        return r() > 0.52 ? <rect key={i} x={x} y={y} width="1" height="1" fill="#0d1613" /> : null;
       })}
       {[
         [0, 0],
@@ -25,9 +25,9 @@ export function QrMark({ seed = 7, className }: { seed?: number; className?: str
         [0, n - 7],
       ].map(([x, y]) => (
         <g key={`${x}${y}`}>
-          <rect x={x} y={y} width="7" height="7" fill="#0e0e0e" />
+          <rect x={x} y={y} width="7" height="7" fill="#0d1613" />
           <rect x={x + 1} y={y + 1} width="5" height="5" fill="#ffffff" />
-          <rect x={x + 2} y={y + 2} width="3" height="3" fill="#0e0e0e" />
+          <rect x={x + 2} y={y + 2} width="3" height="3" fill="#0d1613" />
         </g>
       ))}
     </svg>
@@ -85,21 +85,21 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-ink text-white">
-      <div className="mx-auto max-w-[1760px] px-5 pt-20 md:px-10">
+    <footer className="grain relative overflow-hidden bg-night text-cream">
+      <div className="relative mx-auto max-w-[1800px] px-5 pt-24 md:px-10">
         <div className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-rose">{t("footer.newsletter")}</p>
-            <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-white/80">{t("footer.newsletterSub")}</p>
+            <p className="font-display text-[clamp(2rem,3vw,2.8rem)] leading-[1] tracking-[-0.02em]">{t("footer.newsletter")}</p>
+            <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-rose">{t("footer.newsletterSub")}</p>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 if (email.includes("@")) setDone(true);
               }}
-              className="mt-8 flex max-w-sm border-b border-white/40 focus-within:border-white"
+              className="mt-8 flex max-w-sm border-b border-cream/30 focus-within:border-cream"
             >
-              <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required placeholder={zh ? "电子邮箱" : "Email address"} className="w-full bg-transparent py-3 text-[14px] outline-none placeholder:text-white/40" />
-              <button type="submit" className="text-[11px] font-medium uppercase tracking-[0.16em]">
+              <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required placeholder={zh ? "电子邮箱" : "Email address"} className="w-full bg-transparent py-3 text-[14px] outline-none placeholder:text-cream/35" />
+              <button type="submit" className="cap font-medium text-copper">
                 {done ? (zh ? "已订阅" : "Subscribed") : t("common.subscribe")}
               </button>
             </form>
@@ -111,11 +111,11 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:col-span-8">
             {cols.map((c) => (
               <div key={c.title}>
-                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-rose">{c.title}</p>
+                <p className="cap text-rose">( {c.title} )</p>
                 <ul className="mt-5 space-y-2.5">
                   {c.links.map(([href, label]) => (
                     <li key={href + label}>
-                      <Link href={href} className="text-[13px] text-white/85 transition-colors hover:text-white">
+                      <Link href={href} className="text-[14px] text-cream/85 transition-colors hover:text-copper">
                         {label}
                       </Link>
                     </li>
@@ -126,7 +126,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 border-t border-white/15 py-6 text-[11px] uppercase tracking-[0.14em] text-rose md:flex-row md:items-center md:justify-between">
+        <div className="cap mt-20 flex flex-col gap-3 border-t border-cream/15 py-6 text-rose md:flex-row md:items-center md:justify-between">
           <p>© 2026 Santalum Maison · {zh ? "印度制造" : "Made in India"}</p>
           <p>UPI · RuPay · Visa · Mastercard · 支付宝 · 微信支付 · 银联</p>
           <div className="flex gap-6">
@@ -136,8 +136,8 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <p className="font-wide select-none overflow-hidden whitespace-nowrap px-5 pb-3 text-center text-[12.6vw] font-semibold leading-[0.8] tracking-[-0.01em] text-white md:px-10" aria-hidden>
-        SANTALUM
+      <p className="relative select-none overflow-hidden whitespace-nowrap px-5 text-center font-display text-[21.5vw] leading-[0.76] tracking-[-0.045em] text-cream md:px-10" aria-hidden>
+        Santalum
       </p>
     </footer>
   );

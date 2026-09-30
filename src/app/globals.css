@@ -1,53 +1,59 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────
-   Santalum Maison — "Vermilion"
-   White, near-black and one signature colour: vermilion — sindoor
-   and kumkum in India, 朱红 lacquer and seal red in China.
-   No serif, no ornament; photography and grid do the work.
+   Santalum Maison — "Atlas"
+   An exhibition catalogue, not a shop template. Forest-black (the
+   Eastern Ghats at night), bone paper, and one copper-cinnabar
+   accent taken from fresh-cut heartwood. High-contrast display
+   serif against monospace captions; hairlines, not boxes.
    ────────────────────────────────────────────────────────────── */
 @theme inline {
   /* Surfaces */
-  --color-page: #ffffff;
-  --color-paper: #ffffff;
-  --color-stone: #f4f3f0;      /* quiet field for image-less panels */
-  --color-sand: #ebe9e4;       /* image placeholder */
-  --color-blush: #f4f3f0;
-  --color-maroon: #0e0e0e;
-  --color-cocoa: #0e0e0e;
-  --color-vermilion: #c0351d;  /* signature — white text on it is 5.2:1 */
-  --color-vermilion-deep: #9c2a16;
+  --color-page: #efe9dc;       /* bone paper */
+  --color-paper: #f6f2e8;
+  --color-stone: #e5decd;
+  --color-sand: #d8cfbb;       /* image placeholder */
+  --color-blush: #e5decd;
+  --color-night: #0a110e;      /* forest-black */
+  --color-night-2: #111b17;
+  --color-forest: #12382c;     /* deep emerald panel */
+  --color-maroon: #0a110e;
+  --color-cocoa: #0a110e;
+  --color-vermilion: #b4522a;  /* copper-cinnabar — bone text on it is 4.9:1 */
+  --color-vermilion-deep: #8f3d1c;
+  --color-copper: #e08a5b;     /* the same accent, lifted for use on night */
 
   /* Type & lines */
-  --color-ink: #0e0e0e;
-  --color-graphite: #4b4b4b;
-  --color-muted: #707070;      /* 4.9:1 on white */
-  --color-line: #e2e0db;
-  --color-cream: #ffffff;
-  --color-rose: #bdbdbd;       /* secondary text on black */
+  --color-ink: #0d1613;
+  --color-graphite: #3a4841;
+  --color-muted: #66736b;      /* 4.6:1 on bone */
+  --color-line: #d3cab6;
+  --color-cream: #efe9dc;
+  --color-rose: #9baba1;       /* secondary text on night */
 
   /* Accents */
-  --color-clay: #c0351d;
-  --color-clay-deep: #9c2a16;
-  --color-ember: #c0351d;
-  --color-moss: #2f6b45;
+  --color-clay: #b4522a;
+  --color-clay-deep: #8f3d1c;
+  --color-ember: #e08a5b;
+  --color-moss: #2f6b4f;
   --color-danger: #b3261e;
 
   /* Legacy names used by the admin console */
-  --color-bone: #0e0e0e;
-  --color-gold: #c0351d;
-  --color-jade: #2f6b45;
+  --color-bone: #0d1613;
+  --color-gold: #b4522a;
+  --color-jade: #2f6b4f;
 
-  --font-display: var(--font-archivo), var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-sans: var(--font-inter), var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-display: var(--font-bodoni), var(--font-noto-serif-sc), "Songti SC", "SimSun", serif;
+  --font-sans: var(--font-geist), var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #0e0e0e;
+  --background: #efe9dc;
+  --foreground: #0d1613;
   color-scheme: light;
 }
 
@@ -66,50 +72,80 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: #c0351d; color: #ffffff; }
+::selection { background: #e08a5b; color: #0a110e; }
 
-/* Wide grotesk for the wordmark and display lines */
-.font-wide { font-family: var(--font-display); font-stretch: 125%; }
-.font-display { font-stretch: 112%; }
+.font-wide { font-family: var(--font-display); }
+
+/* Monospace caption — the second voice of the design */
+.cap {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+/* Outlined display type */
+.stroke { color: transparent; -webkit-text-stroke: 1px currentColor; }
+.stroke-cream { color: transparent; -webkit-text-stroke: 1px rgba(239, 233, 220, .55); }
+.stroke-ink { color: transparent; -webkit-text-stroke: 1px rgba(13, 22, 19, .45); }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 .thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-.thin-scroll::-webkit-scrollbar-thumb { background: rgba(14,14,14,.18); }
+.thin-scroll::-webkit-scrollbar-thumb { background: rgba(13,22,19,.2); }
 
 .field {
   width: 100%;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #d6d4cf;
+  border-bottom: 1px solid #c4baa3;
   padding: .85rem 0 .65rem;
-  color: #0e0e0e;
+  color: #0d1613;
   font-size: .95rem;
   outline: none;
   transition: border-color .3s;
   border-radius: 0;
 }
-.field::placeholder { color: #8d8d8d; }
-.field:focus { border-bottom-color: #0e0e0e; }
+.field::placeholder { color: #8b958d; }
+.field:focus { border-bottom-color: #0d1613; }
 
 .admin-input {
   width: 100%;
-  background: #fff;
-  border: 1px solid #dcdad5;
+  background: #fbf9f3;
+  border: 1px solid #d3cab6;
   border-radius: .375rem;
   padding: .55rem .75rem;
-  color: #0e0e0e;
+  color: #0d1613;
   font-size: .85rem;
   outline: none;
   transition: border-color .2s, box-shadow .2s;
 }
-.admin-input:focus { border-color: #0e0e0e; box-shadow: 0 0 0 3px rgba(14,14,14,.06); }
+.admin-input:focus { border-color: #12382c; box-shadow: 0 0 0 3px rgba(18,56,44,.12); }
 
-/* CSS-only entrance for above-the-fold type: visible without waiting for JavaScript. */
+/* Film grain over night fields */
+.grain::after {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none; opacity: .12; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* CSS-only entrances: visible without waiting for JavaScript */
 @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
-.rise { animation: rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.rise { animation: rise 1.1s var(--ease-lux) both; }
+@keyframes line-up { from { transform: translateY(110%); } to { transform: none; } }
+.line-up { display: block; overflow: hidden; }
+.line-up > span { display: block; animation: line-up 1.3s var(--ease-expo) both; }
 
-/* Legacy shape helpers now render square — the design has no arches. */
+/* Opening curtain: counts in, lifts away. Pure CSS so it can never trap the page. */
+@keyframes curtain { 0%, 72% { transform: none; } 100% { transform: translateY(-101%); } }
+@keyframes curtain-out { 0%, 99% { visibility: visible; } 100% { visibility: hidden; } }
+.curtain { animation: curtain 1.9s var(--ease-expo) both, curtain-out 1.9s linear both; }
+@keyframes count-roll { from { transform: translateY(0); } to { transform: translateY(-80%); } }
+.count-roll { animation: count-roll 1.25s var(--ease-expo) both; }
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
 .arch, .arch-sm { border-radius: 0; }
 
 @media (prefers-reduced-motion: reduce) {

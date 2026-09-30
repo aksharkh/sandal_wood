@@ -39,8 +39,8 @@ export function ProductCard({ p, index = 0, tone = "light" }: { p: Product; inde
             />
           )}
         </Link>
-        {note && <span className="absolute left-3 top-3 text-[10px] font-medium uppercase tracking-[0.16em] text-white mix-blend-difference">{note}</span>}
-        <button onClick={() => toggleWish(p.id)} aria-label={t("nav.wishlist")} className="absolute right-3 top-3 text-white opacity-0 mix-blend-difference transition-opacity group-hover:opacity-100">
+        {note && <span className="cap absolute left-3 top-3 bg-page px-2 py-1 text-ink">{note}</span>}
+        <button onClick={() => toggleWish(p.id)} aria-label={t("nav.wishlist")} className="absolute right-3 top-3 text-cream opacity-0 mix-blend-difference transition-opacity group-hover:opacity-100">
           <Heart className={cn("h-4 w-4", wished && "fill-current")} strokeWidth={1.4} />
         </button>
         <button
@@ -50,17 +50,17 @@ export function ProductCard({ p, index = 0, tone = "light" }: { p: Product; inde
             setTimeout(() => setAdded(false), 1400);
             setTimeout(() => setBagOpen(true), 300);
           }}
-          className="absolute inset-x-0 bottom-0 h-11 translate-y-full bg-white text-[11px] font-medium uppercase tracking-[0.16em] text-ink transition-transform duration-500 ease-[var(--ease-lux)] hover:bg-ink hover:text-white group-hover:translate-y-0"
+          className="absolute inset-x-0 bottom-0 cap h-11 translate-y-full bg-page font-medium text-ink transition-transform duration-500 ease-[var(--ease-expo)] hover:bg-vermilion hover:text-cream group-hover:translate-y-0"
         >
           {added ? t("cta.added") : `${t("cta.add")} +`}
         </button>
       </div>
       <Link href={`/product/${p.slug}`} className="mt-4 flex items-start justify-between gap-4">
         <span className="min-w-0">
-          <span className={cn("block text-[11px] font-medium uppercase tracking-[0.14em]", dark ? "text-white" : "text-ink")}>{l(p.name)}</span>
+          <span className={cn("block font-display text-[21px] leading-[1.1] tracking-[-0.015em]", dark ? "text-cream" : "text-ink")}>{l(p.name)}</span>
           <span className={cn("mt-1 block truncate text-[12px]", dark ? "text-rose" : "text-muted")}>{l(p.subtitle)}</span>
         </span>
-        <span className={cn("shrink-0 text-[12px] tabular-nums", dark ? "text-white" : "text-ink")}>
+        <span className={cn("shrink-0 pt-1 font-mono text-[12px] tabular-nums", dark ? "text-cream" : "text-ink")}>
           {hasRange && <span className={dark ? "text-rose" : "text-muted"}>{t("common.from")} </span>}
           {m(minPrice)}
         </span>

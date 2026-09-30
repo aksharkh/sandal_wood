@@ -145,7 +145,7 @@ export function ProductDetail({ slug }: { slug: string }) {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-[130px]">
+            <div className="lg:sticky lg:top-[96px]">
               <Label>{l(coll?.name)}</Label>
               <Heading as="h1" className="mt-4 text-[clamp(2.2rem,3.4vw,3.4rem)]">{l(p.name)}</Heading>
               <p className="mt-2 text-[14px] text-graphite">{l(p.subtitle)}</p>
@@ -176,7 +176,7 @@ export function ProductDetail({ slug }: { slug: string }) {
                       disabled={v.stock === 0}
                       className={cn(
                         "border px-5 py-2.5 text-[12px] transition-colors",
-                        variant.id === v.id ? "border-ink bg-ink text-white" : "border-line hover:border-ink",
+                        variant.id === v.id ? "border-ink bg-ink text-cream" : "border-line hover:border-ink",
                         v.stock === 0 && "cursor-not-allowed text-muted line-through",
                       )}
                     >

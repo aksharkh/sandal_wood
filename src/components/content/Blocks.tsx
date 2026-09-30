@@ -11,7 +11,7 @@ function TwoTone({ text, dark }: { text: string; dark?: boolean }) {
     <>
       {text.split("*").map((p, i) =>
         i % 2 ? (
-          <span key={i} className={dark ? "text-white/55" : "text-muted"}>
+          <span key={i} className={dark ? "italic text-copper" : "italic text-vermilion"}>
             {p}
           </span>
         ) : (
@@ -27,7 +27,7 @@ export function PageHero({ eyebrow, title, lead, image, children }: { eyebrow: s
     return (
       <Section className="pb-20 pt-20 md:pb-28 md:pt-28">
         <Label>{eyebrow}</Label>
-        <Heading as="h1" className="mt-6 max-w-5xl text-[clamp(2.8rem,6vw,6.4rem)]">
+        <Heading as="h1" className="mt-8 max-w-6xl text-[clamp(3.2rem,8.5vw,9.5rem)] leading-[0.9]">
           <TwoTone text={title} />
         </Heading>
         {lead && <p className="mt-8 max-w-xl text-[16px] leading-relaxed text-graphite">{lead}</p>}
@@ -36,11 +36,11 @@ export function PageHero({ eyebrow, title, lead, image, children }: { eyebrow: s
     );
   }
   return (
-    <section className="grid border-b border-line lg:min-h-[calc(100svh-97px)] lg:grid-cols-2">
+    <section className="grid border-b border-line lg:min-h-[calc(100svh-72px)] lg:grid-cols-2">
       <div className="flex flex-col justify-end px-5 pb-14 pt-16 md:px-10 lg:pb-20">
         <Label>{eyebrow}</Label>
         <Reveal>
-          <Heading as="h1" className="mt-6 text-[clamp(2.8rem,5.4vw,6rem)]">
+          <Heading as="h1" className="mt-8 text-[clamp(3.2rem,6.6vw,7.4rem)] leading-[0.92]">
             <TwoTone text={title} />
           </Heading>
           {lead && <p className="mt-8 max-w-lg text-[16px] leading-relaxed text-graphite">{lead}</p>}
@@ -57,7 +57,7 @@ export function PageHero({ eyebrow, title, lead, image, children }: { eyebrow: s
 /** Full-height 50/50: photograph on one side, text on a quiet field on the other. */
 export function Split({ eyebrow, title, children, image, flip, tone = "page" }: { eyebrow?: string; title: string; children: ReactNode; image: string; secondImage?: string; flip?: boolean; tone?: Tone }) {
   const dark = tone === "maroon" || tone === "cocoa" || tone === "clay" || tone === "vermilion";
-  const bg = { page: "bg-white", paper: "bg-white", stone: "bg-stone", blush: "bg-stone", vermilion: "bg-vermilion text-white", clay: "bg-ink text-white", maroon: "bg-ink text-white", cocoa: "bg-ink text-white" }[tone];
+  const bg = { page: "bg-paper", paper: "bg-paper", stone: "bg-stone", blush: "bg-stone", vermilion: "bg-vermilion text-cream", clay: "bg-ink text-cream", maroon: "bg-ink text-cream", cocoa: "bg-ink text-cream" }[tone];
   return (
     <section className={cn("grid lg:grid-cols-2", bg)}>
       <div className={cn("relative min-h-[70svh] lg:min-h-[90svh]", flip && "lg:order-2")}>
@@ -78,7 +78,7 @@ export function Statement({ children, cite }: { children: string; cite?: string 
   return (
     <Section tone="vermilion" className="py-28 md:py-40">
       <Reveal className="max-w-5xl">
-        <p className="font-display text-[clamp(2rem,4.2vw,4.4rem)] font-[400] leading-[1.08] tracking-[-0.025em]">
+        <p className="font-display text-[clamp(2rem,4.2vw,4.4rem)] leading-[1.02] tracking-[-0.03em]">
           <TwoTone text={children} dark />
         </p>
         {cite && <p className="mt-10 text-[11px] font-medium uppercase tracking-[0.18em] text-white/80">{cite}</p>}
@@ -105,15 +105,15 @@ export function FactGrid({ items }: { items: { k: string; v: string; d?: string 
 
 export function CTABand({ title, href, label, sub }: { title: string; href: string; label: string; sub?: string }) {
   return (
-    <Section tone="stone" className="py-24 md:py-32">
+    <Section tone="vermilion" className="py-24 md:py-36">
       <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
         <div>
-          <Heading className="max-w-3xl text-[clamp(2.4rem,4.4vw,4.6rem)]">
-            <TwoTone text={title} />
+          <Heading className="max-w-4xl text-[clamp(2.8rem,6.4vw,7rem)]">
+            <TwoTone text={title} dark />
           </Heading>
-          {sub && <p className="mt-5 max-w-lg text-[15px] text-graphite">{sub}</p>}
+          {sub && <p className="mt-5 max-w-lg text-[15px] text-cream/75">{sub}</p>}
         </div>
-        <Button href={href} variant="vermilion" size="lg">
+        <Button href={href} variant="light" size="lg" arrow>
           {label}
         </Button>
       </div>
@@ -123,7 +123,7 @@ export function CTABand({ title, href, label, sub }: { title: string; href: stri
 
 export function Prose({ children }: { children: ReactNode }) {
   return (
-    <div className="mx-auto max-w-2xl space-y-6 px-5 pb-28 text-[17px] leading-[1.8] text-graphite md:px-0 [&_h2]:mt-14 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-[450] [&_h2]:tracking-[-0.02em] [&_h2]:text-ink">
+    <div className="mx-auto max-w-2xl space-y-6 px-5 pb-28 text-[17px] leading-[1.8] text-graphite md:px-0 [&_h2]:mt-14 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-normal [&_h2]:tracking-[-0.02em] [&_h2]:text-ink">
       {children}
     </div>
   );

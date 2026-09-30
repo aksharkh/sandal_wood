@@ -82,14 +82,14 @@ export function Catalog({ collection }: { collection?: CollectionSlug }) {
         </div>
       </section>
 
-      <div className="sticky top-[97px] z-30 border-y border-line bg-white">
-        <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-4 px-5 text-[13px] md:px-10">
-          <div className="no-scrollbar flex items-center gap-6 overflow-x-auto">
-            <Link href="/collections" className={cn("shrink-0 uppercase tracking-[0.14em] text-[11px] font-medium", !collection ? "text-ink underline underline-offset-[6px]" : "text-muted hover:text-ink")}>
+      <div className="sticky top-[84px] z-30 py-2">
+        <div className="mx-3 flex h-14 max-w-[1440px] items-center justify-between gap-4 rounded-full border border-white/60 bg-paper/80 pl-2 pr-5 text-[13px] shadow-[0_20px_50px_-35px_rgba(60,20,10,.4)] backdrop-blur-xl md:mx-auto md:w-[calc(100%-5rem)]">
+          <div className="no-scrollbar flex items-center gap-1 overflow-x-auto">
+            <Link href="/collections" className={cn("shrink-0 rounded-full px-4 py-2 text-[13px] transition-colors", !collection ? "bg-ink text-cream" : "text-graphite hover:bg-ink/5")}>
               {t("common.all")}
             </Link>
             {COLLECTIONS.map((c) => (
-              <Link key={c.slug} href={`/collections/${c.slug}`} className={cn("shrink-0 uppercase tracking-[0.14em] text-[11px] font-medium", collection === c.slug ? "text-ink underline underline-offset-[6px]" : "text-muted hover:text-ink")}>
+              <Link key={c.slug} href={`/collections/${c.slug}`} className={cn("shrink-0 rounded-full px-4 py-2 text-[13px] transition-colors", collection === c.slug ? "bg-ink text-cream" : "text-graphite hover:bg-ink/5")}>
                 {l(c.name)}
               </Link>
             ))}

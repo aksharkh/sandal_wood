@@ -341,7 +341,7 @@ export function Checkout() {
                   </label>
                 </div>
 
-                <div className="mt-10 border border-line p-6">
+                <div className="mt-10 rounded-[28px] border border-line bg-paper p-6">
                   <label className="flex cursor-pointer items-center justify-between">
                     <span className="flex items-center gap-3 text-sm">
                       <Gift className="h-4 w-4 text-clay" strokeWidth={1.4} /> {zh ? "这是一份礼物" : "This is a gift"}
@@ -435,7 +435,7 @@ export function Checkout() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="mt-6 border border-line p-6"
+                    className="mt-6 rounded-[28px] border border-line bg-paper p-6"
                   >
                     {method === "Card" || method === "UnionPay" ? (
                       <div className="grid gap-x-6 sm:grid-cols-2">
@@ -496,7 +496,7 @@ export function Checkout() {
 
       {/* Summary */}
       <aside className="lg:self-start">
-        <div className="border border-line bg-paper p-7 lg:sticky lg:top-[140px]">
+        <div className="rounded-[32px] border border-line bg-paper p-7 shadow-[0_40px_80px_-60px_rgba(90,30,20,.45)] lg:sticky lg:top-[120px]">
           <p className="text-[12px] text-muted">{zh ? "订单摘要" : "Order summary"}</p>
           <ul className="thin-scroll mt-5 max-h-[320px] space-y-4 overflow-y-auto pr-1">
             {lines.map((x) => (

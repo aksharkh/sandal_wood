@@ -85,37 +85,37 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-ink text-white">
-      <div className="mx-auto max-w-[1760px] px-5 pt-20 md:px-10">
+    <footer data-nav="dark" className="grain night-glow relative z-10 -mt-14 overflow-hidden rounded-t-[40px] text-cream md:rounded-t-[56px]">
+      <div className="relative mx-auto max-w-[1760px] px-5 pt-20 md:px-10 md:pt-24">
         <div className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-rose">{t("footer.newsletter")}</p>
-            <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-white/80">{t("footer.newsletterSub")}</p>
+            <p className="font-display text-[34px] font-light leading-tight tracking-[-0.03em]">{t("footer.newsletter")}</p>
+            <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-cream/70">{t("footer.newsletterSub")}</p>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 if (email.includes("@")) setDone(true);
               }}
-              className="mt-8 flex max-w-sm border-b border-white/40 focus-within:border-white"
+              className="glass-dark mt-8 flex max-w-sm items-center rounded-full p-1.5 pl-5 focus-within:border-white/40"
             >
-              <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required placeholder={zh ? "电子邮箱" : "Email address"} className="w-full bg-transparent py-3 text-[14px] outline-none placeholder:text-white/40" />
-              <button type="submit" className="text-[11px] font-medium uppercase tracking-[0.16em]">
+              <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required placeholder={zh ? "电子邮箱" : "Email address"} className="w-full bg-transparent py-2 text-[14px] outline-none placeholder:text-cream/40" />
+              <button type="submit" className="shrink-0 rounded-full bg-cream px-5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-white">
                 {done ? (zh ? "已订阅" : "Subscribed") : t("common.subscribe")}
               </button>
             </form>
             <div className="mt-8 flex items-center gap-4 text-[12px] text-rose">
-              <QrMark className="h-16 w-16" />
+              <span className="rounded-2xl bg-white p-2"><QrMark className="h-14 w-14" /></span>
               {zh ? "扫码添加微信顾问" : "Scan to reach our Mandarin-speaking advisor"}
             </div>
           </div>
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:col-span-8">
             {cols.map((c) => (
               <div key={c.title}>
-                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-rose">{c.title}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose">{c.title}</p>
                 <ul className="mt-5 space-y-2.5">
                   {c.links.map(([href, label]) => (
                     <li key={href + label}>
-                      <Link href={href} className="text-[13px] text-white/85 transition-colors hover:text-white">
+                      <Link href={href} className="text-[14px] text-cream/80 transition-colors hover:text-white">
                         {label}
                       </Link>
                     </li>
@@ -126,7 +126,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 border-t border-white/15 py-6 text-[11px] uppercase tracking-[0.14em] text-rose md:flex-row md:items-center md:justify-between">
+        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 py-6 text-[12px] text-rose md:flex-row md:items-center md:justify-between">
           <p>© 2026 Santalum Maison · {zh ? "印度制造" : "Made in India"}</p>
           <p>UPI · RuPay · Visa · Mastercard · 支付宝 · 微信支付 · 银联</p>
           <div className="flex gap-6">
@@ -136,8 +136,8 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <p className="font-wide select-none overflow-hidden whitespace-nowrap px-5 pb-3 text-center text-[12.6vw] font-semibold leading-[0.8] tracking-[-0.01em] text-white md:px-10" aria-hidden>
-        SANTALUM
+      <p className="relative select-none overflow-hidden whitespace-nowrap bg-gradient-to-b from-[#e59a74] via-[#9f3f2a] to-transparent bg-clip-text px-5 pb-2 text-center font-display text-[17.5vw] font-extralight leading-[0.78] tracking-[-0.05em] text-transparent md:px-10" aria-hidden>
+        Santalum
       </p>
     </footer>
   );

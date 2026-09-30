@@ -2,30 +2,30 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
 import { useRef, type ReactNode } from "react";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
 
-/** Quiet fade-up on first view. */
+/** Soft rise with a touch of depth on first view. */
 export function Reveal({ children, delay = 0, className, as = "div" }: { children: ReactNode; delay?: number; className?: string; as?: "div" | "li" | "section" }) {
   const M = motion[as] as typeof motion.div;
   return (
     <M
       className={className}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-6% 0px" }}
-      transition={{ duration: 0.9, ease: EASE, delay }}
+      transition={{ duration: 1.1, ease: EASE, delay }}
     >
       {children}
     </M>
   );
 }
 
-/** Line of display type that fades up as one unit (no per-word theatrics). */
+/** Line of display type that rises as one unit. */
 export function Words({ text, className, delay = 0, immediate = false }: { text: string; className?: string; delay?: number; immediate?: boolean }) {
   const trigger = immediate ? { animate: { opacity: 1, y: 0 } } : { whileInView: { opacity: 1, y: 0 }, viewport: { once: true } };
   return (
@@ -50,7 +50,7 @@ export function Parallax({ children, speed = 0.08, className }: { children: Reac
 
 /**
  * Photograph through next/image (served from our own domain — reachable in mainland China).
- * Reveals with a clean upward wipe. The design is square; `shape` is accepted for compatibility.
+ * Soft large radius by default; reveals by settling from a slight zoom and blur.
  */
 export function Photo({
   src,
@@ -59,6 +59,7 @@ export function Photo({
   sizes = "(min-width: 1024px) 50vw, 100vw",
   priority,
   zoom = false,
+  shape,
   position,
   scale,
 }: {
@@ -72,16 +73,17 @@ export function Photo({
   position?: string;
   scale?: MotionValue<number>;
 }) {
+  const radius = shape === "rect" ? "" : shape === "circle" ? "rounded-full" : "rounded-[24px]";
   return (
-    <div className={cn("relative overflow-hidden bg-sand", className)}>
+    <div className={cn("relative isolate overflow-hidden bg-sand", radius, className)}>
       {src ? (
         <motion.div
           className="absolute inset-0"
           style={scale ? { scale } : undefined}
-          initial={priority || scale ? false : { clipPath: "inset(100% 0 0 0)" }}
-          whileInView={priority || scale ? undefined : { clipPath: "inset(0% 0 0 0)" }}
+          initial={priority || scale ? false : { scale: 1.12, opacity: 0 }}
+          whileInView={priority || scale ? undefined : { scale: 1, opacity: 1 }}
           viewport={{ once: true, margin: "-4% 0px" }}
-          transition={{ duration: 1.2, ease: EASE }}
+          transition={{ duration: 1.4, ease: EASE }}
         >
           <Image
             src={src}
@@ -90,7 +92,7 @@ export function Photo({
             sizes={sizes}
             priority={priority}
             unoptimized={src.startsWith("data:")}
-            className={cn("object-cover", zoom && "transition-transform duration-[1.6s] ease-[var(--ease-lux)] group-hover:scale-[1.035]")}
+            className={cn("object-cover", zoom && "transition-transform duration-[1.6s] ease-[var(--ease-lux)] group-hover:scale-[1.06]")}
             style={position ? { objectPosition: position } : undefined}
           />
         </motion.div>
@@ -101,8 +103,8 @@ export function Photo({
   );
 }
 
-export function ProductPhoto({ p, index = 0, className, sizes, alt }: { p: Product; index?: number; className?: string; sizes?: string; alt?: string; shape?: string }) {
-  return <Photo src={p.images?.[index] ?? p.images?.[0]} alt={alt ?? p.name.en} className={className} sizes={sizes} zoom />;
+export function ProductPhoto({ p, index = 0, className, sizes, alt, shape }: { p: Product; index?: number; className?: string; sizes?: string; alt?: string; shape?: string }) {
+  return <Photo src={p.images?.[index] ?? p.images?.[0]} alt={alt ?? p.name.en} className={className} sizes={sizes} zoom shape={shape === "rect" ? "rect" : undefined} />;
 }
 
 type BtnProps = {
@@ -117,27 +119,34 @@ type BtnProps = {
   arrow?: boolean;
 };
 
-/** Square, uppercase, quiet. Inverts on hover. */
+/** Pill button. With `arrow`, the arrow sits in its own disc and slides through on hover. */
 export function Button({ children, href, variant = "solid", size = "md", className, onClick, type = "button", disabled, arrow }: BtnProps) {
-  const sizes = { sm: "h-9 px-4", md: "h-12 px-7", lg: "h-14 px-9" };
+  const sizes = { sm: "h-9 px-4 text-[12px]", md: "h-12 px-6 text-[13px]", lg: "h-14 px-8 text-[14px]" };
   const variants = {
-    solid: "bg-ink text-white border border-ink hover:bg-white hover:text-ink",
-    vermilion: "bg-vermilion text-white border border-vermilion hover:bg-vermilion-deep hover:border-vermilion-deep",
-    clay: "bg-vermilion text-white border border-vermilion hover:bg-vermilion-deep hover:border-vermilion-deep",
-    outline: "border border-ink text-ink hover:bg-ink hover:text-white",
-    light: "bg-white text-ink border border-white hover:bg-transparent hover:text-white",
-    "ghost-light": "border border-white/60 text-white hover:bg-white hover:text-ink",
+    solid: "bg-ink text-cream hover:bg-vermilion",
+    vermilion: "bg-vermilion text-cream hover:bg-vermilion-deep",
+    clay: "bg-vermilion text-cream hover:bg-vermilion-deep",
+    outline: "border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-cream",
+    light: "bg-cream text-ink hover:bg-white",
+    "ghost-light": "glass-dark text-cream hover:bg-cream hover:text-ink",
   };
+  const disc = variant === "light" || variant === "outline" ? "bg-ink/10" : "bg-white/15";
   const cls = cn(
-    "inline-flex items-center justify-center gap-3 whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.16em] transition-colors duration-300 disabled:pointer-events-none disabled:opacity-40",
+    "group/btn inline-flex items-center justify-center gap-3 whitespace-nowrap rounded-full font-medium tracking-[0.01em] transition-colors duration-500 ease-[var(--ease-lux)] disabled:pointer-events-none disabled:opacity-40",
     sizes[size],
+    arrow && (size === "sm" ? "pr-1.5" : "pr-2"),
     variants[variant],
     className,
   );
   const inner = (
     <>
       {children}
-      {arrow && <span aria-hidden>→</span>}
+      {arrow && (
+        <span aria-hidden className={cn("relative grid place-items-center overflow-hidden rounded-full", size === "sm" ? "h-6 w-6" : "h-8 w-8", disc)}>
+          <span className="transition-transform duration-500 ease-[var(--ease-lux)] group-hover/btn:translate-x-7">→</span>
+          <span className="absolute -translate-x-7 transition-transform duration-500 ease-[var(--ease-lux)] group-hover/btn:translate-x-0">→</span>
+        </span>
+      )}
     </>
   );
   return href ? (
@@ -152,46 +161,121 @@ export function Button({ children, href, variant = "solid", size = "md", classNa
 }
 
 export function Label({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn("text-[11px] font-medium uppercase tracking-[0.18em] text-muted", className)}>{children}</p>;
+  return (
+    <p className={cn("inline-flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-muted", className)}>
+      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" aria-hidden />
+      {children}
+    </p>
+  );
 }
 
 export function TextLink({ href, children, className }: { href: string; children: ReactNode; className?: string }) {
   return (
-    <Link href={href} className={cn("group relative inline-flex items-center gap-2 pb-1 text-[11px] font-medium uppercase tracking-[0.16em]", className)}>
+    <Link href={href} className={cn("group/tl relative inline-flex items-center gap-2 pb-1 text-[13px] font-medium", className)}>
       {children}
-      <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-      <span className="absolute bottom-0 left-0 h-px w-full bg-current" />
+      <span aria-hidden className="transition-transform duration-500 ease-[var(--ease-lux)] group-hover/tl:translate-x-1">
+        →
+      </span>
+      <span className="absolute bottom-0 left-0 h-px w-full bg-current opacity-25" />
+      <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-700 ease-[var(--ease-lux)] group-hover/tl:scale-x-100" />
     </Link>
   );
 }
 
 const TONES = {
-  page: "bg-white text-ink",
-  paper: "bg-white text-ink",
+  page: "bg-page text-ink",
+  paper: "bg-paper text-ink",
   stone: "bg-stone text-ink",
-  blush: "bg-stone text-ink",
-  vermilion: "bg-vermilion text-white",
-  clay: "bg-ink text-white",
-  maroon: "bg-ink text-white",
-  cocoa: "bg-ink text-white",
+  blush: "blush-glow text-ink",
+  vermilion: "bg-vermilion text-cream",
+  clay: "night-glow text-cream",
+  maroon: "night-glow text-cream",
+  cocoa: "night-glow text-cream",
 };
 export type Tone = keyof typeof TONES;
 
-export function Section({ children, tone = "page", className, id, wide }: { children: ReactNode; tone?: Tone; className?: string; id?: string; wide?: boolean }) {
+export function Section({ children, tone = "page", className, id, wide, dark }: { children: ReactNode; tone?: Tone; className?: string; id?: string; wide?: boolean; dark?: boolean }) {
+  const night = dark ?? (tone === "clay" || tone === "maroon" || tone === "cocoa" || tone === "vermilion");
   return (
-    <section id={id} className={cn(TONES[tone], className)}>
-      <div className={cn("mx-auto px-5 md:px-10", wide ? "max-w-[1760px]" : "max-w-[1600px]")}>{children}</div>
+    <section id={id} data-nav={night ? "dark" : undefined} className={cn("relative", TONES[tone], className)}>
+      <div className={cn("relative mx-auto px-5 md:px-10", wide ? "max-w-[1760px]" : "max-w-[1560px]")}>{children}</div>
     </section>
   );
 }
 
-/** Display type: grotesk, tight, sentence case. */
+/** Display type: light geometric sans, tight, sentence case. */
 export function Heading({ children, className, as = "h2" }: { children: ReactNode; className?: string; as?: "h1" | "h2" | "h3" }) {
   const T = as;
-  return <T className={cn("font-display font-[450] leading-[1.02] tracking-[-0.025em]", className)}>{children}</T>;
+  return <T className={cn("font-display font-light leading-[1.02] tracking-[-0.035em]", className)}>{children}</T>;
 }
 
-/** Kept for API compatibility; the Vermilion design uses no tickers. */
+/**
+ * Scroll-linked reading: each word brightens from a faint ghost to full
+ * as the paragraph passes through the viewport.
+ */
+export function ScrollWords({ text, className, dim = "opacity-[0.16]" }: { text: string; className?: string; dim?: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
+  const words = text.split(" ");
+  return (
+    <p ref={ref} className={className}>
+      {words.map((w, i) => (
+        <ScrollWord key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} dim={dim}>
+          {w}
+        </ScrollWord>
+      ))}
+    </p>
+  );
+}
+function ScrollWord({ children, progress, range, dim }: { children: string; progress: MotionValue<number>; range: [number, number]; dim: string }) {
+  const opacity = useTransform(progress, range, [0, 1]);
+  return (
+    <span className="relative mr-[0.26em] inline-block">
+      <span className={dim}>{children}</span>
+      <motion.span style={{ opacity }} className="absolute inset-0">
+        {children}
+      </motion.span>
+    </span>
+  );
+}
+
+/**
+ * 3D tilt: the card leans toward the pointer with a soft specular glare.
+ * CSS transforms only — cheap, and inert on touch devices.
+ */
+export function Tilt({ children, className, max = 8, glare = true }: { children: ReactNode; className?: string; max?: number; glare?: boolean }) {
+  const px = useMotionValue(0.5);
+  const py = useMotionValue(0.5);
+  const cfg = { stiffness: 150, damping: 18, mass: 0.6 };
+  const rx = useSpring(useTransform(py, [0, 1], [max, -max]), cfg);
+  const ry = useSpring(useTransform(px, [0, 1], [-max, max]), cfg);
+  const gx = useTransform(px, (v) => `${v * 100}%`);
+  const gy = useTransform(py, (v) => `${v * 100}%`);
+  const bg = useMotionTemplate`radial-gradient(480px circle at ${gx} ${gy}, rgba(255,244,236,.35), transparent 45%)`;
+  return (
+    <div className={cn("[perspective:1200px]", className)}>
+      <motion.div
+        style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
+        onPointerMove={(e) => {
+          if (e.pointerType !== "mouse") return;
+          const r = e.currentTarget.getBoundingClientRect();
+          px.set((e.clientX - r.left) / r.width);
+          py.set((e.clientY - r.top) / r.height);
+        }}
+        onPointerLeave={() => {
+          px.set(0.5);
+          py.set(0.5);
+        }}
+        className="relative h-full rounded-[inherit] will-change-transform"
+      >
+        {children}
+        {glare && <motion.div aria-hidden style={{ background: bg }} className="pointer-events-none absolute inset-0 z-10 rounded-[24px] mix-blend-soft-light" />}
+      </motion.div>
+    </div>
+  );
+}
+
+/** Kept for API compatibility; the design uses no tickers. */
 export function Marquee({ items, className }: { items: string[]; className?: string }) {
   return <p className={className}>{items.join("  ·  ")}</p>;
 }

@@ -145,7 +145,7 @@ export function ProductDetail({ slug }: { slug: string }) {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-[130px]">
+            <div className="lg:sticky lg:top-[120px]">
               <Label>{l(coll?.name)}</Label>
               <Heading as="h1" className="mt-4 text-[clamp(2.2rem,3.4vw,3.4rem)]">{l(p.name)}</Heading>
               <p className="mt-2 text-[14px] text-graphite">{l(p.subtitle)}</p>
@@ -175,8 +175,8 @@ export function ProductDetail({ slug }: { slug: string }) {
                       onClick={() => setVariantId(v.id)}
                       disabled={v.stock === 0}
                       className={cn(
-                        "border px-5 py-2.5 text-[12px] transition-colors",
-                        variant.id === v.id ? "border-ink bg-ink text-white" : "border-line hover:border-ink",
+                        "rounded-full border px-5 py-2.5 text-[13px] transition-colors",
+                        variant.id === v.id ? "border-ink bg-ink text-cream" : "border-ink/15 hover:border-ink",
                         v.stock === 0 && "cursor-not-allowed text-muted line-through",
                       )}
                     >
@@ -190,19 +190,19 @@ export function ProductDetail({ slug }: { slug: string }) {
               </div>
 
               <div className="mt-6 flex gap-3">
-                <div className="flex h-14 items-center border border-line">
+                <div className="flex h-14 items-center rounded-full border border-ink/15 px-1">
                   <button className="grid h-full w-11 place-items-center" onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Decrease"><Minus className="h-3.5 w-3.5" /></button>
                   <span className="w-6 text-center tabular-nums">{qty}</span>
                   <button className="grid h-full w-11 place-items-center" onClick={() => setQty((q) => Math.min(10, q + 1))} aria-label="Increase"><Plus className="h-3.5 w-3.5" /></button>
                 </div>
                 <Button onClick={() => add()} size="lg" className="flex-1">{added ? t("cta.added") : t("cta.add")}</Button>
-                <button onClick={() => toggleWish(p.id)} aria-label={t("nav.wishlist")} className="grid h-14 w-14 place-items-center border border-line hover:border-ink">
+                <button onClick={() => toggleWish(p.id)} aria-label={t("nav.wishlist")} className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-ink/15 hover:border-ink">
                   <Heart className={cn("h-5 w-5", wished && "fill-clay text-clay")} strokeWidth={1.4} />
                 </button>
               </div>
               <Button onClick={() => add(true)} variant="outline" size="lg" className="mt-3 w-full">{t("cta.buy")}</Button>
 
-              <div className="mt-6 bg-stone p-6 text-[13px]">
+              <div className="mt-6 rounded-[24px] bg-stone p-6 text-[13px]">
                 {currency !== "CNY" ? (
                   <>
                     <p className="text-graphite">{zh ? "查询送达时间" : "Check delivery date"}</p>
@@ -268,7 +268,7 @@ export function ProductDetail({ slug }: { slug: string }) {
 
       <AnimatePresence>
         {sticky && (
-          <motion.div initial={{ y: 80 }} animate={{ y: 0 }} exit={{ y: 80 }} transition={{ duration: 0.4, ease: EASE }} className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper">
+          <motion.div initial={{ y: 80 }} animate={{ y: 0 }} exit={{ y: 80 }} transition={{ duration: 0.4, ease: EASE }} className="fixed inset-x-3 bottom-3 z-40 rounded-full border border-white/60 bg-paper/85 shadow-[0_20px_50px_-25px_rgba(60,20,10,.45)] backdrop-blur-xl">
             <div className="mx-auto flex max-w-[1440px] items-center gap-4 px-5 py-3 md:px-10">
               <div className="min-w-0 flex-1 text-[13px]">
                 <p className="truncate font-medium">{l(p.name)}</p>

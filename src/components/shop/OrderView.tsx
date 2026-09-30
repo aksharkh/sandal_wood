@@ -93,7 +93,7 @@ export function OrderView({ id }: { id: string }) {
       </div>
 
       {/* tracker */}
-      <div className="mt-12 border border-line bg-paper p-8">
+      <div className="mt-12 rounded-[32px] border border-line bg-paper p-8">
         {cancelled ? (
           <p className="text-center font-display text-2xl">
             {order.status === "cancelled" ? (zh ? "订单已取消，款项已退回" : "Cancelled — payment refunded") : zh ? "已退货退款" : "Returned — refund issued"}
@@ -136,7 +136,7 @@ export function OrderView({ id }: { id: string }) {
       </div>
 
       <div className="mt-8 grid gap-8 md:grid-cols-[1.4fr_1fr]">
-        <div className="border border-line p-7">
+        <div className="rounded-[28px] border border-line bg-paper p-7">
           <ul className="divide-y divide-line">
             {order.lines.map((ln, i) => {
               const p = products.find((x) => x.id === ln.productId);
@@ -176,7 +176,7 @@ export function OrderView({ id }: { id: string }) {
           </dl>
         </div>
         <div className="space-y-4">
-          <div className="border border-line p-7 text-sm">
+          <div className="rounded-[28px] border border-line bg-paper p-7 text-sm">
             <p className="text-[12px] text-muted">{zh ? "配送至" : "Delivering to"}</p>
             <p className="mt-3">{order.address.name}</p>
             <p className="text-graphite">{order.address.line1}</p>

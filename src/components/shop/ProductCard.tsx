@@ -25,7 +25,7 @@ export function ProductCard({ p, index = 0, tone = "light" }: { p: Product; inde
 
   return (
     <Reveal delay={(index % 4) * 0.06} className="group relative">
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[22px]">
         <Link href={`/product/${p.slug}`} className="block">
           <Photo src={p.images?.[0]} alt={l(p.name)} className="aspect-[3/4]" sizes="(min-width: 1024px) 25vw, 50vw" />
           {second && (
@@ -39,7 +39,7 @@ export function ProductCard({ p, index = 0, tone = "light" }: { p: Product; inde
             />
           )}
         </Link>
-        {note && <span className="cap absolute left-3 top-3 bg-page px-2 py-1 text-ink">{note}</span>}
+        {note && <span className="cap absolute left-3 top-3 rounded-full bg-page px-3 py-1 text-ink">{note}</span>}
         <button onClick={() => toggleWish(p.id)} aria-label={t("nav.wishlist")} className="absolute right-3 top-3 text-cream opacity-0 mix-blend-difference transition-opacity group-hover:opacity-100">
           <Heart className={cn("h-4 w-4", wished && "fill-current")} strokeWidth={1.4} />
         </button>
@@ -57,10 +57,10 @@ export function ProductCard({ p, index = 0, tone = "light" }: { p: Product; inde
       </div>
       <Link href={`/product/${p.slug}`} className="mt-4 flex items-start justify-between gap-4">
         <span className="min-w-0">
-          <span className={cn("block font-display text-[21px] leading-[1.1] tracking-[-0.015em]", dark ? "text-cream" : "text-ink")}>{l(p.name)}</span>
+          <span className={cn("block font-display text-[18px] font-semibold leading-[1.1] tracking-[-0.03em]", dark ? "text-cream" : "text-ink")}>{l(p.name)}</span>
           <span className={cn("mt-1 block truncate text-[12px]", dark ? "text-rose" : "text-muted")}>{l(p.subtitle)}</span>
         </span>
-        <span className={cn("shrink-0 pt-1 font-mono text-[12px] tabular-nums", dark ? "text-cream" : "text-ink")}>
+        <span className={cn("shrink-0 pt-0.5 text-[13px] font-medium tabular-nums", dark ? "text-cream" : "text-ink")}>
           {hasRange && <span className={dark ? "text-rose" : "text-muted"}>{t("common.from")} </span>}
           {m(minPrice)}
         </span>

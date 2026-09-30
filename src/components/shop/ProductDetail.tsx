@@ -145,7 +145,7 @@ export function ProductDetail({ slug }: { slug: string }) {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-[96px]">
+            <div className="lg:sticky lg:top-8">
               <Label>{l(coll?.name)}</Label>
               <Heading as="h1" className="mt-4 text-[clamp(2.2rem,3.4vw,3.4rem)]">{l(p.name)}</Heading>
               <p className="mt-2 text-[14px] text-graphite">{l(p.subtitle)}</p>

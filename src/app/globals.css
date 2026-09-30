@@ -1,59 +1,61 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────
-   Santalum Maison — "Atlas"
-   An exhibition catalogue, not a shop template. Forest-black (the
-   Eastern Ghats at night), bone paper, and one copper-cinnabar
-   accent taken from fresh-cut heartwood. High-contrast display
-   serif against monospace captions; hairlines, not boxes.
+   Santalum Maison — "Handscroll"
+   The homepage unrolls sideways, like a Chinese handscroll (手卷)
+   or an Indian pattachitra. Indigo — the dye of India and the blue
+   of Chinese porcelain — with porcelain white and a persimmon seal.
+   Photographs are cut as discs and tall pills, never boxes.
    ────────────────────────────────────────────────────────────── */
 @theme inline {
   /* Surfaces */
-  --color-page: #efe9dc;       /* bone paper */
-  --color-paper: #f6f2e8;
-  --color-stone: #e5decd;
-  --color-sand: #d8cfbb;       /* image placeholder */
-  --color-blush: #e5decd;
-  --color-night: #0a110e;      /* forest-black */
-  --color-night-2: #111b17;
-  --color-forest: #12382c;     /* deep emerald panel */
-  --color-maroon: #0a110e;
-  --color-cocoa: #0a110e;
-  --color-vermilion: #b4522a;  /* copper-cinnabar — bone text on it is 4.9:1 */
-  --color-vermilion-deep: #8f3d1c;
-  --color-copper: #e08a5b;     /* the same accent, lifted for use on night */
+  --color-page: #f2f0e9;       /* porcelain */
+  --color-paper: #f9f8f3;
+  --color-stone: #e7e5db;
+  --color-sand: #d7d4c7;       /* image placeholder */
+  --color-blush: #e7e5db;
+  --color-night: #0e1330;      /* indigo night */
+  --color-night-2: #171d42;
+  --color-forest: #1f2c66;     /* indigo (kept under its old token name) */
+  --color-indigo: #1f2c66;
+  --color-maroon: #0e1330;
+  --color-cocoa: #0e1330;
+  --color-vermilion: #c24a22;  /* persimmon seal — porcelain text on it is 4.7:1 */
+  --color-vermilion-deep: #9c3816;
+  --color-copper: #f2906a;     /* the same accent, lifted for use on indigo */
 
   /* Type & lines */
-  --color-ink: #0d1613;
-  --color-graphite: #3a4841;
-  --color-muted: #66736b;      /* 4.6:1 on bone */
-  --color-line: #d3cab6;
-  --color-cream: #efe9dc;
-  --color-rose: #9baba1;       /* secondary text on night */
+  --color-ink: #11152c;
+  --color-graphite: #3c415a;
+  --color-muted: #676c84;      /* 4.7:1 on porcelain */
+  --color-line: #d6d4c8;
+  --color-cream: #f2f0e9;
+  --color-rose: #a6acca;       /* secondary text on indigo */
 
   /* Accents */
-  --color-clay: #b4522a;
-  --color-clay-deep: #8f3d1c;
-  --color-ember: #e08a5b;
+  --color-clay: #c24a22;
+  --color-clay-deep: #9c3816;
+  --color-ember: #f2906a;
   --color-moss: #2f6b4f;
   --color-danger: #b3261e;
 
   /* Legacy names used by the admin console */
-  --color-bone: #0d1613;
-  --color-gold: #b4522a;
+  --color-bone: #11152c;
+  --color-gold: #c24a22;
   --color-jade: #2f6b4f;
 
-  --font-display: var(--font-bodoni), var(--font-noto-serif-sc), "Songti SC", "SimSun", serif;
-  --font-sans: var(--font-geist), var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-bricolage), var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-sans: var(--font-dm), var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-expo: cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 :root {
-  --background: #efe9dc;
-  --foreground: #0d1613;
+  --background: #f2f0e9;
+  --foreground: #11152c;
+  --rail: 76px;
   color-scheme: light;
 }
 
@@ -72,61 +74,63 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: #e08a5b; color: #0a110e; }
+::selection { background: #c24a22; color: #f2f0e9; }
 
 .font-wide { font-family: var(--font-display); }
 
-/* Monospace caption — the second voice of the design */
+/* Small caption voice */
 .cap {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 600;
   line-height: 1.5;
-  letter-spacing: .04em;
+  letter-spacing: .14em;
   text-transform: uppercase;
 }
 
 /* Outlined display type */
-.stroke { color: transparent; -webkit-text-stroke: 1px currentColor; }
-.stroke-cream { color: transparent; -webkit-text-stroke: 1px rgba(239, 233, 220, .55); }
-.stroke-ink { color: transparent; -webkit-text-stroke: 1px rgba(13, 22, 19, .45); }
+.stroke { color: transparent; -webkit-text-stroke: 1.5px currentColor; }
+
+/* Upright text for the rail */
+.upright { writing-mode: vertical-rl; transform: rotate(180deg); }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 .thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-.thin-scroll::-webkit-scrollbar-thumb { background: rgba(13,22,19,.2); }
+.thin-scroll::-webkit-scrollbar-thumb { background: rgba(17,21,44,.2); border-radius: 9px; }
 
 .field {
   width: 100%;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #c4baa3;
+  border-bottom: 1px solid #c6c3b4;
   padding: .85rem 0 .65rem;
-  color: #0d1613;
+  color: #11152c;
   font-size: .95rem;
   outline: none;
   transition: border-color .3s;
   border-radius: 0;
 }
-.field::placeholder { color: #8b958d; }
-.field:focus { border-bottom-color: #0d1613; }
+.field::placeholder { color: #8d91a6; }
+.field:focus { border-bottom-color: #1f2c66; }
 
 .admin-input {
   width: 100%;
-  background: #fbf9f3;
-  border: 1px solid #d3cab6;
-  border-radius: .375rem;
+  background: #fcfbf8;
+  border: 1px solid #d6d4c8;
+  border-radius: .625rem;
   padding: .55rem .75rem;
-  color: #0d1613;
+  color: #11152c;
   font-size: .85rem;
   outline: none;
   transition: border-color .2s, box-shadow .2s;
 }
-.admin-input:focus { border-color: #12382c; box-shadow: 0 0 0 3px rgba(18,56,44,.12); }
+.admin-input:focus { border-color: #1f2c66; box-shadow: 0 0 0 3px rgba(31,44,102,.14); }
 
-/* Film grain over night fields */
+/* Film grain over indigo fields */
 .grain::after {
   content: "";
-  position: absolute; inset: 0; pointer-events: none; opacity: .12; mix-blend-mode: overlay;
+  position: absolute; inset: 0; pointer-events: none; opacity: .14; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -135,18 +139,16 @@ body {
 .rise { animation: rise 1.1s var(--ease-lux) both; }
 @keyframes line-up { from { transform: translateY(110%); } to { transform: none; } }
 .line-up { display: block; overflow: hidden; }
-.line-up > span { display: block; animation: line-up 1.3s var(--ease-expo) both; }
+.line-up > span { display: block; animation: line-up 1.2s var(--ease-lux) both; }
+@keyframes pill-in { from { clip-path: inset(50% 50% 50% 50% round 999px); } to { clip-path: inset(0 0 0 0 round 999px); } }
+.pill-in { animation: pill-in 1.4s var(--ease-lux) both; }
 
-/* Opening curtain: counts in, lifts away. Pure CSS so it can never trap the page. */
-@keyframes curtain { 0%, 72% { transform: none; } 100% { transform: translateY(-101%); } }
-@keyframes curtain-out { 0%, 99% { visibility: visible; } 100% { visibility: hidden; } }
-.curtain { animation: curtain 1.9s var(--ease-expo) both, curtain-out 1.9s linear both; }
-@keyframes count-roll { from { transform: translateY(0); } to { transform: translateY(-80%); } }
-.count-roll { animation: count-roll 1.25s var(--ease-expo) both; }
-
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
+.nudge { animation: nudge 1.8s ease-in-out infinite; }
 @keyframes spin-slow { to { transform: rotate(360deg); } }
+.spin-slow { animation: spin-slow 22s linear infinite; }
 
-.arch, .arch-sm { border-radius: 0; }
+.arch, .arch-sm { border-radius: 999px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }

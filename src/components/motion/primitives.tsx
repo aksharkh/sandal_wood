@@ -69,6 +69,7 @@ export function Photo({
   sizes = "(min-width: 1024px) 50vw, 100vw",
   priority,
   zoom = false,
+  shape,
   position,
   scale,
 }: {
@@ -85,8 +86,9 @@ export function Photo({
   const frame = useRef<HTMLDivElement>(null);
   const seen = useInView(frame, { once: true, margin: "-4% 0px" });
   const still = priority || !!scale;
+  const radius = shape === "circle" || shape === "arch" ? "rounded-full" : shape === "rect" ? "" : "rounded-[22px]";
   return (
-    <div ref={frame} className={cn("relative overflow-hidden bg-sand", className)}>
+    <div ref={frame} className={cn("relative isolate overflow-hidden bg-sand", radius, className)}>
       {src ? (
         <motion.div
           className="absolute inset-0"
@@ -131,7 +133,7 @@ type BtnProps = {
 
 /** Monospace label that rolls to its twin on hover; a colour plate wipes up behind it. */
 export function Button({ children, href, variant = "solid", size = "md", className, onClick, type = "button", disabled, arrow }: BtnProps) {
-  const sizes = { sm: "h-9 px-4", md: "h-12 px-6", lg: "h-14 px-8" };
+  const sizes = { sm: "h-9 px-4 text-[13px]", md: "h-12 px-7", lg: "h-14 px-9 text-[15px]" };
   const variants = {
     solid: "bg-ink text-cream [--plate:var(--color-vermilion)]",
     vermilion: "bg-vermilion text-cream [--plate:var(--color-ink)]",
@@ -141,14 +143,14 @@ export function Button({ children, href, variant = "solid", size = "md", classNa
     "ghost-light": "border border-cream/35 text-cream hover:text-ink [--plate:var(--color-cream)]",
   };
   const cls = cn(
-    "group/btn cap relative inline-flex items-center justify-center gap-3 overflow-hidden whitespace-nowrap rounded-[3px] font-medium transition-colors duration-500 disabled:pointer-events-none disabled:opacity-40",
+    "group/btn relative inline-flex items-center justify-center gap-3 overflow-hidden whitespace-nowrap rounded-full text-[14px] font-medium transition-colors duration-500 disabled:pointer-events-none disabled:opacity-40",
     sizes[size],
     variants[variant],
     className,
   );
   const inner = (
     <>
-      <span aria-hidden className="absolute inset-0 origin-bottom scale-y-0 bg-[var(--plate)] transition-transform duration-500 ease-[var(--ease-expo)] group-hover/btn:scale-y-100" />
+      <span aria-hidden className="absolute inset-0 translate-y-full rounded-full bg-[var(--plate)] transition-transform duration-500 ease-[var(--ease-lux)] group-hover/btn:translate-y-0" />
       <span className="relative block overflow-hidden">
         <span className="block transition-transform duration-500 ease-[var(--ease-expo)] group-hover/btn:-translate-y-full">{children}</span>
         <span aria-hidden className="absolute inset-0 translate-y-full transition-transform duration-500 ease-[var(--ease-expo)] group-hover/btn:translate-y-0">
@@ -157,7 +159,7 @@ export function Button({ children, href, variant = "solid", size = "md", classNa
       </span>
       {arrow && (
         <span aria-hidden className="relative transition-transform duration-500 ease-[var(--ease-expo)] group-hover/btn:translate-x-1">
-          ↗
+          →
         </span>
       )}
     </>
@@ -174,15 +176,20 @@ export function Button({ children, href, variant = "solid", size = "md", classNa
 }
 
 export function Label({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn("cap text-muted", className)}>( {children} )</p>;
+  return (
+    <p className={cn("cap inline-flex items-center gap-2.5 text-muted", className)}>
+      <span aria-hidden className="h-2 w-2 rounded-full bg-vermilion" />
+      {children}
+    </p>
+  );
 }
 
 export function TextLink({ href, children, className }: { href: string; children: ReactNode; className?: string }) {
   return (
-    <Link href={href} className={cn("group/tl cap relative inline-flex items-center gap-2 pb-1.5 font-medium", className)}>
+    <Link href={href} className={cn("group/tl relative inline-flex items-center gap-2 pb-1.5 text-[14px] font-medium", className)}>
       {children}
-      <span aria-hidden className="transition-transform duration-500 ease-[var(--ease-expo)] group-hover/tl:-translate-y-0.5 group-hover/tl:translate-x-0.5">
-        ↗
+      <span aria-hidden className="transition-transform duration-500 ease-[var(--ease-expo)] group-hover/tl:translate-x-1">
+        →
       </span>
       <span className="absolute bottom-0 left-0 h-px w-full origin-right bg-current transition-transform duration-500 ease-[var(--ease-expo)] group-hover/tl:scale-x-0" />
       <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform delay-200 duration-500 ease-[var(--ease-expo)] group-hover/tl:scale-x-100" />
@@ -213,7 +220,7 @@ export function Section({ children, tone = "page", className, id, wide }: { chil
 /** Display type: high-contrast serif, tight. */
 export function Heading({ children, className, as = "h2" }: { children: ReactNode; className?: string; as?: "h1" | "h2" | "h3" }) {
   const T = as;
-  return <T className={cn("font-display font-normal leading-[0.98] tracking-[-0.025em]", className)}>{children}</T>;
+  return <T className={cn("font-display font-semibold leading-[0.96] tracking-[-0.035em]", className)}>{children}</T>;
 }
 
 /** Scroll-linked reading: each word inks in as the paragraph passes through the viewport. */

@@ -17,7 +17,7 @@ export function QrMark({ seed = 7, className }: { seed?: number; className?: str
         const x = i % n;
         const y = Math.floor(i / n);
         if (finder(x, y)) return null;
-        return r() > 0.52 ? <rect key={i} x={x} y={y} width="1" height="1" fill="#0d1613" /> : null;
+        return r() > 0.52 ? <rect key={i} x={x} y={y} width="1" height="1" fill="#11152c" /> : null;
       })}
       {[
         [0, 0],
@@ -25,9 +25,9 @@ export function QrMark({ seed = 7, className }: { seed?: number; className?: str
         [0, n - 7],
       ].map(([x, y]) => (
         <g key={`${x}${y}`}>
-          <rect x={x} y={y} width="7" height="7" fill="#0d1613" />
+          <rect x={x} y={y} width="7" height="7" fill="#11152c" />
           <rect x={x + 1} y={y + 1} width="5" height="5" fill="#ffffff" />
-          <rect x={x + 2} y={y + 2} width="3" height="3" fill="#0d1613" />
+          <rect x={x + 2} y={y + 2} width="3" height="3" fill="#11152c" />
         </g>
       ))}
     </svg>
@@ -111,7 +111,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:col-span-8">
             {cols.map((c) => (
               <div key={c.title}>
-                <p className="cap text-rose">( {c.title} )</p>
+                <p className="cap text-rose">{c.title}</p>
                 <ul className="mt-5 space-y-2.5">
                   {c.links.map(([href, label]) => (
                     <li key={href + label}>
@@ -136,7 +136,7 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <p className="relative select-none overflow-hidden whitespace-nowrap px-5 text-center font-display text-[21.5vw] leading-[0.76] tracking-[-0.045em] text-cream md:px-10" aria-hidden>
+      <p className="relative select-none overflow-hidden whitespace-nowrap px-5 text-center font-display text-[19vw] font-bold leading-[0.8] tracking-[-0.06em] text-cream md:px-10" aria-hidden>
         Santalum
       </p>
     </footer>

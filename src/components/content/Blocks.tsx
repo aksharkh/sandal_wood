@@ -11,7 +11,7 @@ function TwoTone({ text, dark }: { text: string; dark?: boolean }) {
     <>
       {text.split("*").map((p, i) =>
         i % 2 ? (
-          <span key={i} className={dark ? "italic text-copper" : "italic text-vermilion"}>
+          <span key={i} className={dark ? "text-copper" : "text-vermilion"}>
             {p}
           </span>
         ) : (

@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
 
-/** Compact mark for tight spaces (admin, favicon-scale). */
+/** The seal: a persimmon disc, like a chop mark at the end of a scroll. */
 export function Monogram({ className }: { className?: string }) {
   return (
-    <span className={cn("inline-grid h-8 w-8 place-items-center rounded-full bg-forest font-display text-[17px] italic leading-none text-cream", className)} aria-hidden>
+    <span className={cn("inline-grid h-9 w-9 place-items-center rounded-full bg-vermilion font-display text-[17px] font-bold leading-none text-cream", className)} aria-hidden>
       S
     </span>
   );
@@ -11,9 +11,10 @@ export function Monogram({ className }: { className?: string }) {
 
 export function Wordmark({ className, compact = false }: { className?: string; compact?: boolean }) {
   return (
-    <span className={cn("flex items-baseline gap-2 leading-none", className)}>
-      <span className="font-display text-[24px] normal-case tracking-[-0.02em] md:text-[26px]">Santalum</span>
-      {!compact && <span className="cap hidden opacity-70 sm:inline">Maison · 印度</span>}
+    <span className={cn("flex items-center gap-2.5 leading-none", className)}>
+      <Monogram className="h-7 w-7 text-[14px]" />
+      <span className="font-display text-[20px] font-bold normal-case tracking-[-0.03em]">Santalum</span>
+      {!compact && <span className="cap hidden opacity-60 sm:inline">Maison</span>}
     </span>
   );
 }
